@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SapiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,23 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
-})->name('dashboard');
-Route::get('/sapi', function () {
-    return view('sapi.index');
-});
-Route::get('/layout', function () {
-    return view('layout.main');
-});
-Route::get('/index', function () {
-    return view('index');
-});
+    return view('login.index');
+})->name('login');
 
-Route::get('/sapikeluar', function () {
-    return view('Sapi_Keluar');
-});
+Route::get('/sapi', [SapiController::class, 'sapi']);
+Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
+
 
 Route::get('/hasilperah', function () {
-    return view('Hasil_Perah');
+    return view('hasilperah.Hasil_Perah');
 });
 
