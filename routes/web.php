@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SapiController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,24 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-})->name('dashboard');
-Route::get('/sapi', function () {
-    return view('sapi.index');
-});
-Route::get('/layout', function () {
-    return view('layout.main');
-});
-Route::get('/index', function () {
-    return view('index');
-});
+Route::get('/', [LoginController::class, 'login']);
+Route::get('/dashboard', [LoginController::class, 'dashboard']);
 
-Route::get('/sapikeluar', function () {
-    return view('Sapi_Keluar');
-});
-
-Route::get('/hasilperah', function () {
-    return view('Hasil_Perah');
-});
+Route::get('/daftar-sapi', [SapiController::class, 'daftarsapi']);
+Route::get('/sapi-masuk', [SapiController::class, 'sapimasuk']);
+Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
+Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);
 
