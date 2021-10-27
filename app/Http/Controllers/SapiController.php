@@ -12,11 +12,11 @@ class SapiController extends Controller
     }
 
     public function sapimasuk(){
-        return view('Sapi.sapikeluar');
+        return view('Sapi.sapimasuk');
     }
 
     public function sapikeluar(){
-        return view('Sapi.sapimasuk');
+        return view('Sapi.sapikeluar');
     }
 
     public function hasilperah(){

@@ -41,12 +41,14 @@
                     <span>Dashboard</span></a>
             </li>
 
+            @if(auth()->user()->id_role == 1)
             <!-- Pengurus -->
             <li id="pengurus" class="nav-item">
                 <a class="nav-link" href="{{ url('pengurus') }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Pengurus</span></a>
             </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -86,6 +88,7 @@
                     <span>Hasil Perah</span></a>
             </li>
 
+            @if(auth()->user()->id_role == 1)
             <!-- Pengeluaran -->
             <li id="pengeluaran" class="nav-item">
                 <a class="nav-link" href="{{ url('pengeluaran') }}">
@@ -99,6 +102,7 @@
                     <i class="fas fa-fw fa-file-invoice-dollar"></i>
                     <span>Laporan Keuangan</span></a>
             </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

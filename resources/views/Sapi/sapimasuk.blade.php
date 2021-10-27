@@ -3,6 +3,9 @@
 @section('title', 'Sapi Masuk')
 
 @section('content')
+<script type="text/javascript">
+  document.getElementById('sapi').classList.add('active');
+</script>
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
