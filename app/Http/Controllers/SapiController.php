@@ -22,4 +22,5 @@ class SapiController extends Controller
     public function hasilperah(){
         return view('HasilPerah.index');
     }
+    
 }

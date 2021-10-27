@@ -23,3 +23,4 @@ Route::get('/sapi-masuk', [SapiController::class, 'sapimasuk']);
 Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
 Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);
 
+?>

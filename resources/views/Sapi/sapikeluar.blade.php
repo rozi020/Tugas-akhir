@@ -3,18 +3,19 @@
 @section('title', 'Sapi Keluar')
 
 @section('content')
+<script type="text/javascript">
+  document.getElementById('sapi').classList.add('active');
+</script>
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
-
     <!-- Main Content -->
     <div id="content">
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
             <h1 class="h3 mb-4 text-gray-800">Sapi Keluar</h1>
-                 <!-- DataTales Example -->
+            <!-- DataTables Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
@@ -49,7 +50,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container-fluid -->
 
