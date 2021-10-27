@@ -27,6 +27,10 @@ use App\Http\Controllers\UserController;
 // Admin Panel - Admin Only
 Route::group(['middleware' => ['auth','checkRole:1']], function(){
     Route::get('/pengurus', [UserController::class, 'pengurus']);
+    Route::get('/pengurus/load/table-pengurus', [UserController::class, 'LoadTablePengurus']);
+    Route::get('/pengurus/load/data-pengurus', [UserController::class, 'LoadDataPengurus']);
+    Route::get('/pengurus/delete/{id}', [UserController::class, 'destroy']);
+    Route::post('/pengurus/add', [UserController::class, 'store']);
 });
 
 // Admin Panel - Admin dan Pengurus bisa akses

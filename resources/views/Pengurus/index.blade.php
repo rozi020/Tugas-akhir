@@ -3,6 +3,9 @@
 @section('title', 'Pengurus Sapi')
 
 @section('content')
+<script type="text/javascript">
+  document.getElementById('pengurus').classList.add('active');
+</script>
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -14,51 +17,78 @@
 
             <!-- Page Heading -->
             <h1 class="h3 mb-4 text-gray-800">Daftar Pengurus Sapi</h1>
-                 <!-- DataTales Example -->
+            <!-- DataTables -->
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                    <th>Nomor</th>
-                                    <th>Nama</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Umur</th>
-                                    <th>Berat Badan</th>
-                                    <th>Jenis</th>
-                                    <th>Status</th>
-                                    <th>Opsi</th>
-			                </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <a class="btn btn-success btn-sm" href="">Tambah</a>
-                                        <a class="btn btn-warning btn-sm" href="">Edit</a>
-                                        <a class="btn btn-danger btn-sm" href="">Hapus</a>
-				                    </td>
-			                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
 
+                <div class="card-header py-3">
+                    <button type="button" class="btn btn-primary" id="btn-modal-pengurus"><i class="fa fa-plus"></i> Tambah Pengurus</button>
+                </div>
+
+                <div class="card-body table-responsive">
+                    <div id="datatable-pengurus"></div>
+                </div>
+
+            </div>
         </div>
         <!-- /.container-fluid -->
 
     </div>
     <!-- End of Main Content -->
 </div>
+
+<!-- Add Pengurus Modal-->
+<div class="modal fade" id="PengurusModal" tabindex="-1" role="dialog" aria-labelledby="AddPengurusModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="AddPengurusModal">Tambah Pengurus</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <form accept-charset="utf-8" id="FormPengurus" enctype="multipart/form-data" method="post">
+            @csrf
+            <div class="form-group">
+              <label for="name">Nama Lengkap <i style="color: red;">*</i></label>
+              <input name="name" type="text" class="form-control" id="name" placeholder="Nama Lengkap" required="">
+            </div>
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">Username <i style="color: red;">*</i></label>
+              <input name="username" type="text" class="form-control" id="username" placeholder="E-Mail" required="">
+            </div>
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Default Password <i style="color: red;">*</i></label>
+              <div class="input-group" id="show_hide_password">
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password" required="">
+              <a href=""><div class="input-group-addon eye">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+              </div></a>
+            </div>
+            <!-- Phone -->
+            <div class="form-group">
+              <label for="phone_number">Nomor Telepon <i style="color: red;">*</i></label>
+              <input name="phone_number" type="tel" class="form-control" id="phone_number" placeholder="Nomor Telepon" required="">
+            </div>
+            <br>
+            <span style="font-size: 12px;"><i style="color: red;"> * </i> : Data harus terisi</span>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-submit-admin">Submit</button>
+            <button class="btn btn-primary btn-loading" type="button" style="display: none;" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Memproses...
+            </button>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
 @endsection
+@push('javascript')
+    <script src="{{asset('assets/js/bootstrap-show-password.js')}}"></script>
+    <script src="{{asset('assets/js/AdminPanel/Pengurus.js')}}"></script>
+@endpush
