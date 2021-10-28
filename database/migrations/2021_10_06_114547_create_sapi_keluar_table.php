@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanKeuangansTable extends Migration
+class CreateSapiKeluarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLaporanKeuangansTable extends Migration
      */
     public function up()
     {
-        Schema::create('laporan_keuangans', function (Blueprint $table) {
+        Schema::create('sapi_keluar', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateLaporanKeuangansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laporan_keuangans');
+        Schema::dropIfExists('sapi_keluar');
     }
 }

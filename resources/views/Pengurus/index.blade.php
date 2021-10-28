@@ -21,6 +21,10 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
+                    <div class="counter">
+                        <b>Total History</b> : {{$counter}}
+                    </div>
+                    <br>
                     <button type="button" class="btn btn-primary" id="btn-modal-pengurus"><i class="fa fa-plus"></i> Tambah Pengurus</button>
                 </div>
 
@@ -56,7 +60,7 @@
             <!-- Username -->
             <div class="form-group">
               <label for="username">Username <i style="color: red;">*</i></label>
-              <input name="username" type="text" class="form-control" id="username" placeholder="E-Mail" required="">
+              <input name="username" type="text" class="form-control" id="username" placeholder="Username" required="">
             </div>
             <!-- Password -->
             <div class="form-group">

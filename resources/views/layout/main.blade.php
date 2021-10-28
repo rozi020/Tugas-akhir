@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/ico" href="{{ asset('assets/img/favicon.ico') }}"/>
 
     <title>@yield('title')</title>
 
@@ -26,7 +27,7 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('dashboard') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fab fa-stripe-s"></i>
                 </div>
@@ -44,6 +45,13 @@
             </li>
 
             @if(auth()->user()->id_role == 1)
+            <!-- Log History -->
+            <li id="history" class="nav-item">
+                <a class="nav-link" href="{{ url('history') }}">
+                    <i class="fas fa-fw fa-history"></i>
+                    <span>Log History</span></a>
+            </li>
+
             <!-- Pengurus -->
             <li id="pengurus" class="nav-item">
                 <a class="nav-link" href="{{ url('pengurus') }}">
@@ -166,8 +174,13 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
+                                @if(auth()->user()->avatar == !NULL)
                                 <img class="img-profile rounded-circle"
                                     src="assets/img/users/avatar/{{auth()->user()->avatar}}">
+                                @else
+                                <img class="img-profile rounded-circle"
+                                    src="assets/img/avatar-stock.jpg">
+                                @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -185,8 +198,8 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
                                     Logout
                                 </a>
                             </div>
@@ -240,7 +253,7 @@
                 <div class="modal-body">Tekan Tombol "Logout" dibawah untuk keluar dari sesi anda.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                    <a class="btn btn-primary" href="{{ url('logout') }}">Logout</a>
+                    <a class="btn btn-danger" href="{{ url('logout') }}">Logout</a>
                 </div>
             </div>
         </div>
