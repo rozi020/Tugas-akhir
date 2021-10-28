@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
+use App\Models\History;
 use Validator;
 use Alert;
 use File;
@@ -13,6 +14,7 @@ use DataTables;
 class UserController extends Controller
 {
     public function pengurus(){
+        $counter = User::where('id_role',2)->count();
 
         if(session('success')){
             Alert::success(session('success'));
@@ -20,7 +22,7 @@ class UserController extends Controller
             Alert::error(session('error'));
         }
 
-        return view('Pengurus.index');
+        return view('Pengurus.index', compact('counter'));
     }
 
     public function store(Request $request){
@@ -59,12 +61,12 @@ class UserController extends Controller
         $user->save();
 
         // Writing History
-        // $history = new History;
-        // $history->user_id = auth()->user()->id;
-        // $history->nama = auth()->user()->name;
-        // $history->aksi = "Tambah";
-        // $history->keterangan = "Menambahkan Akun '".$request->email."' sebagai Admin";
-        // $history->save();
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Tambah";
+        $history->keterangan = "Menambahkan Akun Pengurus dengan username : '".$request->username."'";
+        $history->save();
 
         return response([
             'message' => 'sukses',
@@ -77,16 +79,16 @@ class UserController extends Controller
         File::delete('assets/img/users/avatar/'.$avatar);
 
         $user = User::find($id);
-        // History::where('id',$user->id)->delete();
+        History::where('id',$user->id)->delete();
         $user->delete();
 
         // Writing History
-        // $history = new History;
-        // $history->user_id = auth()->user()->id;
-        // $history->nama = auth()->user()->name;
-        // $history->aksi = "Hapus";
-        // $history->keterangan = "Menghapus Akun '".$user->email."' beserta Historynya";
-        // $history->save();
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Hapus";
+        $history->keterangan = "Menghapus Akun '".$user->username."' beserta Historynya";
+        $history->save();
 
         return response([
             'message' => "delete sukses"

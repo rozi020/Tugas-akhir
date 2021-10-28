@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SapiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,17 @@ use App\Http\Controllers\UserController;
 
 // Admin Panel - Admin Only
 Route::group(['middleware' => ['auth','checkRole:1']], function(){
+    // Data Pengurus
     Route::get('/pengurus', [UserController::class, 'pengurus']);
     Route::get('/pengurus/load/table-pengurus', [UserController::class, 'LoadTablePengurus']);
     Route::get('/pengurus/load/data-pengurus', [UserController::class, 'LoadDataPengurus']);
     Route::get('/pengurus/delete/{id}', [UserController::class, 'destroy']);
     Route::post('/pengurus/add', [UserController::class, 'store']);
+
+    // Log History Pengurus
+    Route::get('/history', [HistoryController::class, 'history']);
+    Route::get('/history/load/table-history', [HistoryController::class, 'LoadTableHistory']);
+    Route::get('/history/load/data-history', [HistoryController::class, 'LoadDataHistory']);
 });
 
 // Admin Panel - Admin dan Pengurus bisa akses

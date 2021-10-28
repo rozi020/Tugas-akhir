@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSapisTable extends Migration
+class CreatePengeluaranTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateSapisTable extends Migration
      */
     public function up()
     {
-        Schema::create('sapis', function (Blueprint $table) {
+        Schema::create('pengeluaran', function (Blueprint $table) {
             $table->id();
+            $table->string('jumlah_pengeluaran');
+            $table->string('tanggal_pengeluaran');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateSapisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sapis');
+        Schema::dropIfExists('pengeluaran');
     }
 }
