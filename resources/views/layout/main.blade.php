@@ -14,7 +14,9 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="{{ asset('assets/css/datatables.css') }}">
     <link href="{{ asset('assets/sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    @stack('stylesheet')
 </head>
 
 <body id="page-top">
@@ -41,12 +43,14 @@
                     <span>Dashboard</span></a>
             </li>
 
+            @if(auth()->user()->id_role == 1)
             <!-- Pengurus -->
             <li id="pengurus" class="nav-item">
                 <a class="nav-link" href="{{ url('pengurus') }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Pengurus</span></a>
             </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -86,6 +90,7 @@
                     <span>Hasil Perah</span></a>
             </li>
 
+            @if(auth()->user()->id_role == 1)
             <!-- Pengeluaran -->
             <li id="pengeluaran" class="nav-item">
                 <a class="nav-link" href="{{ url('pengeluaran') }}">
@@ -99,6 +104,7 @@
                     <i class="fas fa-fw fa-file-invoice-dollar"></i>
                     <span>Laporan Keuangan</span></a>
             </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -159,9 +165,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mas Rozy</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="assets/img/users/avatar/{{auth()->user()->avatar}}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -191,6 +197,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @include('sweetalert::alert')
                     @yield('content')
                 </div>
                 <!-- /.container-fluid -->
@@ -247,6 +254,10 @@
     <script src="{{ asset('assets/sb-admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
+    <script src="{{ asset('assets/js/datatables.js')}}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/sb-admin/js/sb-admin-2.min.js') }}"></script>
+    @stack('javascript')
 </body>
 </html>
