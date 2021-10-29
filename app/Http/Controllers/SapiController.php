@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Sapi;
-use Alert;
-use DataTables;
+use App\Models\History;
+use Alert, File, Validator, DataTables;
 
 class SapiController extends Controller
 {
@@ -25,22 +26,21 @@ class SapiController extends Controller
     public function storeDaftarSapi(Request $request){
 
         $messages = array(
-            'foto.required' => 'Harus ada foto sapi yang terkait!',
             'kode.required' => 'Kode sapi tidak boleh kosong!',
             'kode.unique' => 'Kode sapi sudah terpakai!',
             'umur.required' => 'Umur sapi tidak boleh kosong!',
             'berat.required' => 'Berat sapi tidak boleh kosong!',
             'jenis.required' => 'Jenis sapi tidak boleh kosong!',
-            'status.required' => 'Status sapi tidak boleh kosong!',
+            'status.required' => 'Status sapi tidak boleh kosong!'
         );
 
         $validator = Validator::make($request->all(),[
-            'foto' => 'required',
-            'kode' => 'required|unique:users,kode',
+            'kode' => 'required|unique:sapi,kode',
             'umur' => 'required',
             'berat' => 'required',
             'jenis' => 'required',
             'status' => 'required',
+            'foto' => 'image|nullable'
         ],$messages);
 
         if($validator->fails()){
@@ -49,17 +49,28 @@ class SapiController extends Controller
                     'error' => $error,
                 ]);
         }
-        $upFoto = 'sapi-'.$request->kode.'.'.$request->foto->getClientOriginalExtension();
-        $request->foto->move('assets/img/sapi', $upFoto);
 
-        $sapi = new Sapi;
-        $sapi->kode = $request->kode;
-        $sapi->umur = $request->umur;
-        $sapi->berat = $request->berat;
-        $sapi->jenis = $request->jenis;
-        $sapi->status = $request->status;
-        $sapi->foto = $upFoto;
-        $sapi->save();
+        if($request->hasFile('foto')){
+            $upFoto = 'Sapi-'.$request->kode.'.'.$request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->store('assets/img/sapi/', $upFoto);
+
+            $sapi = new Sapi;
+            $sapi->kode = $request->kode;
+            $sapi->umur = $request->umur;
+            $sapi->berat = $request->berat;
+            $sapi->jenis = $request->jenis;
+            $sapi->status = $request->status;
+            $sapi->foto = $upFoto;
+            $sapi->save();
+        }else{
+            $sapi = new Sapi;
+            $sapi->kode = $request->kode;
+            $sapi->umur = $request->umur;
+            $sapi->berat = $request->berat;
+            $sapi->jenis = $request->jenis;
+            $sapi->status = $request->status;
+            $sapi->save();
+        }
 
         // Writing History
         $history = new History;

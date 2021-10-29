@@ -22,7 +22,7 @@ $(document).ready(function() {
                         data: 'foto',
                         name: 'foto',
                         "render": function(data, type, row) {
-                            return '<img src="assets/img/sapi/'+ data + ' " style="height:100px;width:100px;border-radius:15px;"/>';
+                            return '<img src="assets/img/sapi/'+ data + '" style="height:100px;width:100px;border-radius:15px;"/>';
                         },
                         searchable: false
                     },
@@ -89,9 +89,9 @@ $(document).ready(function() {
         var berat = $("#berat").val();
         var jenis = $("#jenis").val();
         var status = $("#status").val();
-        var upload = $("#upload").val();
+        var foto = $('#upload')[0].files[0];
 
-        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != '' && upload != ''){
+        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != '' && foto != ''){
             $.ajax({
                 type: "post",
                 url: "/daftar-sapi/add",
@@ -162,18 +162,18 @@ $(document).ready(function() {
     })
 
     //OPEN MODAL EDIT ROLES
-    $("body").on("click",".btn-edit-roles",function(e){
-        e.preventDefault()
-        $(".btn-close").css("display","");
-        $(".btn-save-roles").css("display","");
-        $(".btn-loading").css("display","none");
-        $("#editRolesModal").modal("show");
-        var id = $(this).attr("data-id");
-        var role_name = $(this).attr("data-role_name");
+    // $("body").on("click",".btn-edit-roles",function(e){
+    //     e.preventDefault()
+    //     $(".btn-close").css("display","");
+    //     $(".btn-save-roles").css("display","");
+    //     $(".btn-loading").css("display","none");
+    //     $("#editRolesModal").modal("show");
+    //     var id = $(this).attr("data-id");
+    //     var role_name = $(this).attr("data-role_name");
 
-        $("#id-roles").val(id);
-        $("#edit_role_name").val(role_name);
-    })
+    //     $("#id-roles").val(id);
+    //     $("#edit_role_name").val(role_name);
+    // })
 
     //SAVE EDIT ROLES
     // $("body").on("submit","#FormEditRoles", function(e){

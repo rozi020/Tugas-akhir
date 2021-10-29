@@ -52,7 +52,7 @@
         </div>
         <div class="modal-body">
           <form accept-charset="utf-8" id="FormDaftarSapi" enctype="multipart/form-data" method="post">
-            @csrf
+            {{csrf_field()}}
             <!-- Kode Sapi -->
             <div class="form-group">
               <label for="kode">Kode Sapi <i style="color: red;">*</i></label>
