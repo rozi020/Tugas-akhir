@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sapi extends Model
 {
-    use HasFactory;
+    protected $table = 'sapi';
+    protected $fillable = ['foto', 'kode', 'umur', 'berat', 'jenis', 'status'];
 }

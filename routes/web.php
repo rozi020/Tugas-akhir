@@ -46,7 +46,14 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/dashboard', [LoginController::class, 'dashboard']);
 
     // Menu Sapi
+    // Daftar Sapi
     Route::get('/daftar-sapi', [SapiController::class, 'daftarsapi']);
+    Route::get('/daftar-sapi/load/table-daftarsapi', [SapiController::class, 'LoadTableDaftarSapi']);
+    Route::get('/daftar-sapi/load/data-daftarsapi', [SapiController::class, 'LoadDataDaftarSapi']);
+    Route::get('/daftar-sapi/delete/{id}', [SapiController::class, 'destroyDaftarSapi']);
+    Route::post('/daftar-sapi/add', [SapiController::class, 'storeDaftarSapi']);
+
+    // Sapi Masuk
     Route::get('/sapi-masuk', [SapiController::class, 'sapimasuk']);
     Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
     Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);

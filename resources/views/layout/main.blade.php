@@ -17,6 +17,7 @@
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="{{ asset('assets/css/datatables.css') }}">
     <link href="{{ asset('assets/sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/stisla-custom.css') }}">
     @stack('stylesheet')
 </head>
 
@@ -118,8 +119,8 @@
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            <div class="d-none d-md-inline ml-3">
+                <button class="rounded border-0" id="sidebarToggle"></button>
             </div>
            
         </ul>

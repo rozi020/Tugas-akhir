@@ -21,13 +21,13 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
-                    <div class="counter">
-                        <b>Total History</b> : {{$counter}}
-                    </div>
-                    <br>
                     <button type="button" class="btn btn-primary" id="btn-modal-pengurus"><i class="fa fa-plus"></i> Tambah Pengurus</button>
                 </div>
 
+                <div class="counter text-left ml-4">
+                    <b>Total Pengurus</b> : {{$counter}}
+                </div>
+                
                 <div class="card-body table-responsive">
                     <div id="datatable-pengurus"></div>
                 </div>
