@@ -18,14 +18,6 @@ $(document).ready(function() {
                         className: 'text-center',
 						searchable: false
 					},
-                    {
-                        data: 'foto',
-                        name: 'foto',
-                        "render": function(data, type, row) {
-                            return '<img src="assets/img/sapi/'+ data + '" style="height:100px;width:100px;border-radius:15px;"/>';
-                        },
-                        searchable: false
-                    },
 					{
 						data: 'kode',
 						name: 'kode',
@@ -89,9 +81,8 @@ $(document).ready(function() {
         var berat = $("#berat").val();
         var jenis = $("#jenis").val();
         var status = $("#status").val();
-        var foto = $('#upload')[0].files[0];
 
-        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != '' && foto != ''){
+        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != ''){
             $.ajax({
                 type: "post",
                 url: "/daftar-sapi/add",
@@ -128,7 +119,120 @@ $(document).ready(function() {
             });
         }
 
-    })
+    });
+
+    //DATATABLE SAPI KELUAR
+    LoadTableSapiKeluar();
+    function LoadTableSapiKeluar() {
+        $('#datatable-sapikeluar').load('/sapi-keluar/load/table-sapikeluar', function() {
+            $('#table-sapikeluar').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/sapi-keluar/load/data-sapikeluar',
+                    type: 'get'
+                },
+                columns: [
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        className: 'text-center',
+                        searchable: false
+                    },
+                    {
+                        data: 'kode',
+                        name: 'kode',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'harga',
+                        name: 'harga',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi',
+                        className: 'text-center',
+                        searchable: false,
+                        orderable: false
+                    }
+                ]
+            });
+        });
+    }
+
+    //OPEN MODAL KELUARKAN SAPI
+    $("#btn-modal-sapikeluar").on("click",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-submit-sapikeluar").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#SapiKeluarModal").modal("show");
+    });
+
+    //SUBMIT SAPI KELUAR
+    $("body").on("submit","#FormSapiKeluar", function(e){
+        e.preventDefault()
+        $(".btn-submit-sapikeluar").css("display","none");
+        $(".btn-loading").css("display","");
+        $(".btn-close").css("display","none");
+        var data = $("#FormSapiKeluar").serialize();
+        var kode = $("#kode").val();
+        var status = $("#status").val();
+        var keterangan = $("#jenis").val();
+
+        if(kode != '' && status != '' && keterangan != ''){
+            $.ajax({
+                type: "post",
+                url: "/sapi-keluar/add",
+                data: data,
+                success: function(response){
+                    LoadTableSapiKeluar();
+                    $("#SapiKeluarModal").modal("hide");
+                    $("#FormSapiKeluar").trigger("reset");
+                    $(".btn-submit-sapikeluar").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-close").css("display","");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Mengeluarkan Sapi',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-submit-sapikeluar").css("display","");
+            $(".btn-loading").css("display","none");
+            $(".btn-close").css("display","");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
+
+    });
 
     //DELETE SAPI
     $("body").on("click",".btn-delete-daftarsapi", function(e){
@@ -161,68 +265,76 @@ $(document).ready(function() {
 		});
     })
 
-    //OPEN MODAL EDIT ROLES
-    // $("body").on("click",".btn-edit-roles",function(e){
-    //     e.preventDefault()
-    //     $(".btn-close").css("display","");
-    //     $(".btn-save-roles").css("display","");
-    //     $(".btn-loading").css("display","none");
-    //     $("#editRolesModal").modal("show");
-    //     var id = $(this).attr("data-id");
-    //     var role_name = $(this).attr("data-role_name");
+    // OPEN MODAL EDIT SAPI KELUAR
+    $("body").on("click",".btn-edit-sapikeluar",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-save-sapikeluar").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#EditSapiKeluarModal").modal("show");
+        var id = $(this).attr("data-id");
+        var kode = $(this).attr("data-kode");
+        var harga = $(this).attr("data-harga");
+        var status = $(this).attr("data-status");
+        var keterangan = $(this).attr("data-keterangan");
 
-    //     $("#id-roles").val(id);
-    //     $("#edit_role_name").val(role_name);
-    // })
+        $("#id_sapi").val(id);
+        $("#edit_kode").val(kode);
+        $("#edit_harga").val(harga);
+        $("#edit_status").val(status);
+        $("#edit_keterangan").val(keterangan);
+    })
 
-    //SAVE EDIT ROLES
-    // $("body").on("submit","#FormEditRoles", function(e){
-    //     e.preventDefault()
-    //     var id = $("#id-roles").val();
-    //     var data = $("#FormEditRoles").serialize();
-    //     var role_name = $("#edit_role_name").val();
+    // SAVE EDIT SAPI KELUAR
+    $("body").on("submit","#FormEditSapiKeluar", function(e){
+        e.preventDefault()
+        var id = $("#id_sapi").val();
+        var data = $("#FormEditSapiKeluar").serialize();
+        var harga = $("#edit_harga").val();
+        var status = $("#edit_status").val();
+        var keterangan = $("#edit_keterangan").val();
 
-    //     $(".btn-close").css("display","none");
-    //     $(".btn-save-roles").css("display","none");
-    //     $(".btn-loading").css("display","");
+        $(".btn-close").css("display","none");
+        $(".btn-save-sapikeluar").css("display","none");
+        $(".btn-loading").css("display","");
 
-    //     if(role_name != ''){
-    //         $.ajax({
-    //             type: "post",
-    //             url: "/admin-panel/roles/update/"+id,
-    //             data: data,
-    //             success: function(response){
-    //                 LoadTableRoles();
-    //                 $(".btn-close").css("display","");
-    //                 $(".btn-save-roles").css("display","");
-    //                 $(".btn-loading").css("display","none");
-    //                 $("#FormEditRoles").trigger("reset");
-    //                 $("#editRolesModal").modal("hide");
-    //                 Swal.fire({
-    //                     icon: 'success',
-    //                     title: 'Sukses',
-    //                     text: 'Berhasil Memperbarui Role',
-    //                     timer: 1200,
-    //                     showConfirmButton: false
-    //                 });
-    //             },
-    //             error: function(err){
-    //                 console.log(err);
-    //             }
-    //         })
-    //     }else{
-    //         $(".btn-close").css("display","");
-    //         $(".btn-save-roles").css("display","");
-    //         $(".btn-loading").css("display","none");
-    //         Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error',
-    //             text: 'Form tidak boleh kosong!',
-    //             timer: 1200,
-    //             showConfirmButton: false
-    //         });
-    //     }
+        if(status != '' && keterangan != ''){
+            $.ajax({
+                type: "post",
+                url: "/sapi-keluar/update/"+id,
+                data: data,
+                success: function(response){
+                    LoadTableSapiKeluar();
+                    $(".btn-close").css("display","");
+                    $(".btn-save-sapikeluar").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $("#FormSapiKeluar").trigger("reset");
+                    $("#EditSapiKeluarModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Memperbarui Data Sapi',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-close").css("display","");
+            $(".btn-save-sapikeluar").css("display","");
+            $(".btn-loading").css("display","none");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
 
-    // });
+    });
     
 });

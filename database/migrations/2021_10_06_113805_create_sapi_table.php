@@ -15,7 +15,6 @@ class CreateSapiTable extends Migration
     {
         Schema::create('sapi', function (Blueprint $table) {
             $table->id();
-            $table->string('foto')->nullable();
             $table->string('kode');
             $table->string('umur');
             $table->string('berat');

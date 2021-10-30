@@ -15,14 +15,8 @@ class CreateSapiKeluarTable extends Migration
     {
         Schema::create('sapi_keluar', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal_keluar');
-            $table->bigInteger('id_sapi')->unsigned();
-            $table->foreign('id_sapi')
-                ->references('id')
-                ->on('sapi')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
-            $table->string('harga');
+            $table->string('kode');
+            $table->string('harga')->nullable();
             $table->string('status');
             $table->string('keterangan');
             $table->timestamps();

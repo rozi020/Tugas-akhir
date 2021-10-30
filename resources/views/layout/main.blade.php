@@ -82,9 +82,6 @@
                         <a class="collapse-item" href="{{ url('daftar-sapi') }}">
                             <i class="fas fa-fw fa-clipboard-list"></i> Daftar Sapi
                         </a>
-                        <a class="collapse-item" href="{{ url('sapi-masuk') }}">
-                            <i class="fas fa-fw fa-sign-in-alt"></i> Sapi Masuk
-                        </a>
                         <a class="collapse-item" href="{{ url('sapi-keluar') }}">
                             <i class="fas fa-fw fa-sign-out-alt"></i> Sapi Keluar
                         </a>

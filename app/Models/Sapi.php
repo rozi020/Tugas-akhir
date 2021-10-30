@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Sapi extends Model
 {
     protected $table = 'sapi';
-    protected $fillable = ['foto', 'kode', 'umur', 'berat', 'jenis', 'status'];
+    protected $fillable = ['kode', 'umur', 'berat', 'jenis', 'status'];
 }

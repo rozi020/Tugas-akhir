@@ -50,12 +50,16 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/daftar-sapi', [SapiController::class, 'daftarsapi']);
     Route::get('/daftar-sapi/load/table-daftarsapi', [SapiController::class, 'LoadTableDaftarSapi']);
     Route::get('/daftar-sapi/load/data-daftarsapi', [SapiController::class, 'LoadDataDaftarSapi']);
-    Route::get('/daftar-sapi/delete/{id}', [SapiController::class, 'destroyDaftarSapi']);
     Route::post('/daftar-sapi/add', [SapiController::class, 'storeDaftarSapi']);
 
-    // Sapi Masuk
-    Route::get('/sapi-masuk', [SapiController::class, 'sapimasuk']);
+    // Sapi Keluar
     Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
+    Route::get('/sapi-keluar/load/table-sapikeluar', [SapiController::class, 'LoadTableSapiKeluar']);
+    Route::get('/sapi-keluar/load/data-sapikeluar', [SapiController::class, 'LoadDataSapiKeluar']);
+    Route::post('/sapi-keluar/add', [SapiController::class, 'storeSapiKeluar']);
+    Route::post('/sapi-keluar/update/{id}', [SapiController::class, 'updateSapiKeluar']);
+
+    // Hasil Perah
     Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);
 });
 
