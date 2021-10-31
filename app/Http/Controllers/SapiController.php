@@ -71,6 +71,28 @@ class SapiController extends Controller
         ]);
     }
 
+    public function updateDaftarSapi(Request $request, $id){
+
+        $sapi = Sapi::find($id);
+        $sapi->umur = $request->edit_umur;
+        $sapi->berat = $request->edit_berat;
+        $sapi->jenis = $request->edit_jenis;
+        $sapi->status = $request->edit_status;
+        $sapi->save();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Edit";
+        $history->keterangan = "Mengedit Data Sapi dengan Kode : '".$request->edit_kode."' pada tabel Daftar Sapi";
+        $history->save();
+
+        return response([
+            'message' => 'update successfully'
+        ]);
+    }
+
     public function destroyDaftarSapi($id){
         $sapi = Sapi::find($id);
         $sapi->delete();
@@ -96,11 +118,14 @@ class SapiController extends Controller
         $sapi = Sapi::orderBy('id','desc')->get();
 
             return Datatables::of($sapi)->addIndexColumn()
-            ->editColumn('created_at', function($sapi){
-                return date('H:i:s | d-m-Y', strtotime($sapi->created_at));
+            ->editColumn('updated_at', function($sapi){
+                return date('H:i:s | d-m-Y', strtotime($sapi->updated_at));
             })
             ->addColumn('aksi', function($row){
-                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode.'" class="btn btn-outline-danger btn-delete-daftarsapi">
+                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode.'" data-umur="'.$row->umur.'" data-berat="'.$row->berat.'" data-jenis="'.$row->jenis.'" data-status="'.$row->status.'" class="btn btn-outline-success btn-edit-daftarsapi">
+                <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode.'" class="btn btn-outline-danger btn-delete-daftarsapi">
                 <i class="fas fa-trash"></i>
                 </a>';
                 return $btn;

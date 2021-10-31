@@ -134,7 +134,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary btn-submit-sapikeluar">Submit</button>
+            <button type="submit" class="btn btn-primary btn-save-sapikeluar">Save</button>
             <button class="btn btn-primary btn-loading" type="button" style="display: none;" disabled>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Memproses...

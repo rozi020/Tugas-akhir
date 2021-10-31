@@ -44,8 +44,8 @@ $(document).ready(function() {
                         className: 'text-center'
                     },
 					{
-						data: 'created_at',
-						name: 'created_at',
+						data: 'updated_at',
+						name: 'updated_at',
                         className: 'text-center'
 					},
 					{
@@ -119,6 +119,113 @@ $(document).ready(function() {
             });
         }
 
+    });
+
+    // OPEN MODAL EDIT SAPI
+    $("body").on("click",".btn-edit-daftarsapi",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-save-daftarsapi").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#EditDaftarSapiModal").modal("show");
+        var id = $(this).attr("data-id");
+        var kode = $(this).attr("data-kode");
+        var umur = $(this).attr("data-umur");
+        var berat = $(this).attr("data-berat");
+        var jenis = $(this).attr("data-jenis");
+        var status = $(this).attr("data-status");
+
+        $("#id_sapi").val(id);
+        $("#edit_kode").val(kode);
+        $("#edit_umur").val(umur);
+        $("#edit_berat").val(berat);
+        $("#edit_jenis").val(jenis);
+        $("#edit_status").val(status);
+    })
+
+    // SAVE EDIT SAPI
+    $("body").on("submit","#FormEditDaftarSapi", function(e){
+        e.preventDefault()
+        var id = $("#id_sapi").val();
+        var data = $("#FormEditDaftarSapi").serialize();
+        var kode = $("#edit_kode").val();
+        var umur = $("#edit_umur").val();
+        var berat = $("#edit_berat").val();
+        var jenis = $("#edit_jenis").val();
+        var status = $("#edit_status").val();
+
+        $(".btn-close").css("display","none");
+        $(".btn-save-daftarsapi").css("display","none");
+        $(".btn-loading").css("display","");
+
+        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != ''){
+            $.ajax({
+                type: "post",
+                url: "/daftar-sapi/update/"+id,
+                data: data,
+                success: function(response){
+                    LoadTableDaftarSapi();
+                    $(".btn-close").css("display","");
+                    $(".btn-save-daftarsapi").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $("#FormEditDaftarSapi").trigger("reset");
+                    $("#EditDaftarSapiModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Memperbarui Data Sapi',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-close").css("display","");
+            $(".btn-save-daftarsapi").css("display","");
+            $(".btn-loading").css("display","none");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
+
+    });
+
+    //DELETE SAPI
+    $("body").on("click",".btn-delete-daftarsapi", function(e){
+        e.preventDefault()
+        var id = $(this).attr("data-id");
+        var kode = $(this).attr("data-kode");
+
+        Swal.fire({
+            title: 'Hapus data sapi dengan kode : ' + kode + '?',
+            text: 'Anda tidak dapat mengurungkan aksi ini!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: 'get',
+                    url: '/daftar-sapi/delete/' + id,
+                    success: function(response) {
+                        Swal.fire('Deleted!', kode + ' telah dihapus.', 'success');
+                        LoadTableDaftarSapi();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
     });
 
     //DATATABLE SAPI KELUAR
@@ -233,37 +340,6 @@ $(document).ready(function() {
         }
 
     });
-
-    //DELETE SAPI
-    $("body").on("click",".btn-delete-daftarsapi", function(e){
-        e.preventDefault()
-        var id = $(this).attr("data-id");
-        var kode = $(this).attr("data-kode");
-
-        Swal.fire({
-			title: 'Hapus data sapi dengan kode : ' + kode + '?',
-			text: 'Anda tidak dapat mengurungkan aksi ini!',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Ya, Hapus!'
-		}).then((result) => {
-			if (result.value) {
-				$.ajax({
-					type: 'get',
-					url: '/daftar-sapi/delete/' + id,
-					success: function(response) {
-						Swal.fire('Deleted!', kode + ' telah dihapus.', 'success');
-						LoadTableDaftarSapi();
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				});
-			}
-		});
-    })
 
     // OPEN MODAL EDIT SAPI KELUAR
     $("body").on("click",".btn-edit-sapikeluar",function(e){

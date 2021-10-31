@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth','checkRole:1']], function(){
     Route::get('/pengurus/load/data-pengurus', [UserController::class, 'LoadDataPengurus']);
     Route::get('/pengurus/delete/{id}', [UserController::class, 'destroy']);
     Route::post('/pengurus/add', [UserController::class, 'store']);
+    Route::post('/pengurus/update/password/{id}', [UserController::class, 'updatePassword']);
 
     // Log History Pengurus
     Route::get('/history', [HistoryController::class, 'history']);
@@ -51,6 +52,7 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/daftar-sapi/load/table-daftarsapi', [SapiController::class, 'LoadTableDaftarSapi']);
     Route::get('/daftar-sapi/load/data-daftarsapi', [SapiController::class, 'LoadDataDaftarSapi']);
     Route::post('/daftar-sapi/add', [SapiController::class, 'storeDaftarSapi']);
+    Route::post('/daftar-sapi/update/{id}', [SapiController::class, 'updateDaftarSapi']);
 
     // Sapi Keluar
     Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
