@@ -91,7 +91,7 @@
 
             <!-- Hasil Perah -->
             <li id="hasilPerah" class="nav-item">
-                <a class="nav-link" href="{{ url('hasi-perah') }}">
+                <a class="nav-link" href="{{ url('hasil-perah') }}">
                     <i class="fas fa-fw fa-hand-holding-water"></i>
                     <span>Hasil Perah</span></a>
             </li>

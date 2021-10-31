@@ -15,14 +15,14 @@ class CreateHasilPerahTable extends Migration
     {
         Schema::create('hasil_perah', function (Blueprint $table) {
             $table->id();
-            $table->string('tanggal_perah');
-            $table->string('jumlah_perah');
             $table->bigInteger('id_sapi')->unsigned();
             $table->foreign('id_sapi')
                 ->references('id')
                 ->on('sapi')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
+            $table->string('jumlah_perah');
+            $table->string('tanggal_perah');
             $table->timestamps();
         });
     }

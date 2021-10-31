@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Sapi;
 use App\Models\SapiKeluar;
+use App\Models\HasilPerah;
 use App\Models\History;
-use Alert, Validator, DataTables;
+use DB, Alert, Validator, DataTables;
 
 class SapiController extends Controller
 {
@@ -213,7 +214,6 @@ class SapiController extends Controller
     }
 
     public function updateSapiKeluar(Request $request, $id){
-
         $sapi_keluar = SapiKeluar::find($id);
         $sapi_keluar->harga = $request->edit_harga;
         $sapi_keluar->status = $request->edit_status;
@@ -233,8 +233,138 @@ class SapiController extends Controller
         ]);
     }
 
+    // Hasil Perah
     public function hasilperah(){
-        return view('HasilPerah.index');
+        $data_sapi = Sapi::select('id','kode')->get();
+        $counter = HasilPerah::count();
+
+        if(session('success')){
+            Alert::success(session('success'));
+        }elseif(session('error')){
+            Alert::error(session('error'));
+        }
+
+        return view('HasilPerah.index', compact('data_sapi','counter'));
+    }
+
+    public function storeHasilPerah(Request $request){
+
+        $messages = array(
+            'id_sapi.required' => 'Kode sapi tidak boleh kosong!',
+            'id_sapi.unique' => 'Kode sapi sudah terpakai!',
+            'jumlah_perah.required' => 'Umur sapi tidak boleh kosong!',
+            'tanggal_perah.required' => 'Berat sapi tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'id_sapi' => 'required|unique:hasil_perah,id_sapi',
+            'jumlah_perah' => 'required',
+            'tanggal_perah' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
+
+        $hasil = new HasilPerah;
+        $hasil->id_sapi = $request->id_sapi;
+        $hasil->jumlah_perah = $request->jumlah_perah;
+        $hasil->tanggal_perah = $request->tanggal_perah;
+        $hasil->save();
+
+        $sapi =DB::table('hasil_perah')
+                ->join('sapi', 'hasil_perah.id_sapi', '=', 'sapi.id')
+                ->select('sapi.kode as kode')
+                ->where('hasil_perah.id',$id)
+                ->first();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Tambah";
+        $history->keterangan = "Menambahkan Data Pemerahan pada sapi dengan kode : '".$sapi->kode."'";
+        $history->save();
+
+        return response([
+            'message' => 'sukses',
+        ]);
+    }
+
+    public function updateHasilPerah(Request $request, $id){
+
+        $hasil = HasilPerah::find($id);
+        $hasil->id_sapi = $request->edit_id_sapi;
+        $hasil->jumlah_perah = $request->edit_jumlah;
+        $hasil->tanggal_perah = $request->edit_tanggal;
+        $hasil->save();
+
+        $sapi =DB::table('hasil_perah')
+                ->join('sapi', 'hasil_perah.id_sapi', '=', 'sapi.id')
+                ->select('sapi.kode as kode')
+                ->where('hasil_perah.id',$id)
+                ->first();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Edit";
+        $history->keterangan = "Mengedit Data Pemerahan pada sapi dengan kode : '".$sapi->kode."'";
+        $history->save();
+
+        return response([
+            'message' => 'update successfully'
+        ]);
+    }
+
+    public function destroyHasilPerah($id){
+        $hasil = HasilPerah::find($id);
+        $hasil->delete();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Hapus";
+        $history->keterangan = "Menghapus Data Perah.";
+        $history->save();
+
+        return response([
+            'message' => "delete sukses"
+        ]);
+    }
+
+    public function LoadTableHasilPerah(){
+        return view('DataTables.Sapi.HasilPerahDatatable');
+    }
+
+    public function LoadDataHasilPerah(){
+        $hasil = HasilPerah::orderBy('id','desc')->get();
+        $hasil =DB::table('hasil_perah')
+                ->join('sapi', 'hasil_perah.id_sapi', '=', 'sapi.id')
+                ->select('hasil_perah.*','sapi.kode as kode_sapi')
+                ->orderBy('hasil_perah.id','desc')
+                ->get();
+
+            return Datatables::of($hasil)->addIndexColumn()
+            ->editColumn('tanggal_perah', function($hasil){
+                return date('d-m-Y', strtotime($hasil->tanggal_perah));
+            })
+            ->addColumn('aksi', function($row){
+                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-ids="'.$row->id_sapi.'" data-jumlah="'.$row->jumlah_perah.'" data-tanggal="'.$row->tanggal_perah.'" class="btn btn-outline-success btn-edit-hasilperah">
+                <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode_sapi.'" class="btn btn-outline-danger btn-delete-hasilperah">
+                <i class="fas fa-trash"></i>
+                </a>';
+                return $btn;
+         })
+         ->rawColumns(['aksi'])
+            ->make(true);
     }
     
 }

@@ -412,5 +412,210 @@ $(document).ready(function() {
         }
 
     });
+
+
+    //DATATABLE HASIL PERAH
+    LoadTableHasilPerah();
+    function LoadTableHasilPerah() {
+        $('#datatable-hasilperah').load('/hasil-perah/load/table-hasilperah', function() {
+            $('#table-hasilperah').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/hasil-perah/load/data-hasilperah',
+                    type: 'get'
+                },
+                columns: [
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        className: 'text-center',
+                        searchable: false
+                    },
+                    {
+                        data: 'kode_sapi',
+                        name: 'kode_sapi',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'jumlah_perah',
+                        name: 'jumlah_perah',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'tanggal_perah',
+                        name: 'tanggal_perah',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi',
+                        className: 'text-center',
+                        searchable: false,
+                        orderable: false
+                    }
+                ]
+            });
+        });
+    }
+
+    //OPEN MODAL TAMBAH HASIL PERAH
+    $("#btn-modal-hasilperah").on("click",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-submit-hasilperah").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#HasilPerahModal").modal("show");
+    });
+
+    //SUBMIT SAPI
+    $("body").on("submit","#FormHasilPerah", function(e){
+        e.preventDefault()
+        $(".btn-submit-hasilperah").css("display","none");
+        $(".btn-loading").css("display","");
+        $(".btn-close").css("display","none");
+        var data = $("#FormHasilPerah").serialize();
+        var jumlah = $("#jumlah_perah").val();
+        var tanggal = $("#tanggal_perah").val();
+
+        if(jumlah != '' && tanggal != ''){
+            $.ajax({
+                type: "post",
+                url: "/hasil-perah/add",
+                data: data,
+                success: function(response){
+                    LoadTableHasilPerah();
+                    $("#HasilPerahModal").modal("hide");
+                    $("#FormHasilPerah").trigger("reset");
+                    $(".btn-submit-hasilperah").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-close").css("display","");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Menambahkan Data Perah Sapi',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-submit-hasilperah").css("display","");
+            $(".btn-loading").css("display","none");
+            $(".btn-close").css("display","");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
+
+    });
+
+    // OPEN MODAL EDIT SAPI
+    $("body").on("click",".btn-edit-hasilperah",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-save-hasilperah").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#EditHasilPerahModal").modal("show");
+        var id = $(this).attr("data-id");
+        var ids = $(this).attr("data-ids");
+        var jumlah = $(this).attr("data-jumlah");
+        var tanggal = $(this).attr("data-tanggal");
+
+        $("#id_perah").val(id);
+        $("#edit_id_sapi").val(ids);
+        $("#edit_jumlah").val(jumlah);
+        $("#edit_tanggal").val(tanggal);
+    })
+
+    // SAVE EDIT SAPI
+    $("body").on("submit","#FormEditHasilPerah", function(e){
+        e.preventDefault()
+        var id = $("#id_perah").val();
+        var data = $("#FormEditHasilPerah").serialize();
+        var ids = $("#edit_id_sapi").val();
+        var jumlah = $("#edit_jumlah").val();
+        var tanggal = $("#edit_tanggal").val();
+
+        $(".btn-close").css("display","none");
+        $(".btn-save-hasilperah").css("display","none");
+        $(".btn-loading").css("display","");
+
+        if(jumlah != '' && tanggal != ''){
+            $.ajax({
+                type: "post",
+                url: "/hasil-perah/update/"+id,
+                data: data,
+                success: function(response){
+                    LoadTableHasilPerah();
+                    $(".btn-close").css("display","");
+                    $(".btn-save-hasilperah").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $("#FormEditHasilPerah").trigger("reset");
+                    $("#EditHasilPerahModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Memperbarui Data Hasi Pemerahan',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-close").css("display","");
+            $(".btn-save-hasilperah").css("display","");
+            $(".btn-loading").css("display","none");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
+
+    });
+
+    //DELETE HASIL PERAH
+    $("body").on("click",".btn-delete-hasilperah", function(e){
+        e.preventDefault()
+        var id = $(this).attr("data-id");
+        var kode = $(this).attr("data-kode");
+
+        Swal.fire({
+            title: 'Hapus data hasil perah pada sapi dengan kode : ' + kode + '?',
+            text: 'Anda tidak dapat mengurungkan aksi ini!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: 'get',
+                    url: '/hasil-perah/delete/' + id,
+                    success: function(response) {
+                        Swal.fire('Deleted!', kode + ' telah dihapus.', 'success');
+                        LoadTableHasilPerah();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
+    });
     
 });

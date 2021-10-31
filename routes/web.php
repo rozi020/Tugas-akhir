@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/daftar-sapi', [SapiController::class, 'daftarsapi']);
     Route::get('/daftar-sapi/load/table-daftarsapi', [SapiController::class, 'LoadTableDaftarSapi']);
     Route::get('/daftar-sapi/load/data-daftarsapi', [SapiController::class, 'LoadDataDaftarSapi']);
+    Route::get('/daftar-sapi/delete/{id}', [SapiController::class, 'destroyDaftarSapi']);
     Route::post('/daftar-sapi/add', [SapiController::class, 'storeDaftarSapi']);
     Route::post('/daftar-sapi/update/{id}', [SapiController::class, 'updateDaftarSapi']);
 
@@ -63,6 +64,11 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
 
     // Hasil Perah
     Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);
+    Route::get('/hasil-perah/load/table-hasilperah', [SapiController::class, 'LoadTableHasilPerah']);
+    Route::get('/hasil-perah/load/data-hasilperah', [SapiController::class, 'LoadDataHasilPerah']);
+    Route::get('/hasil-perah/delete/{id}', [SapiController::class, 'destroyHasilPerah']);
+    Route::post('/hasil-perah/add', [SapiController::class, 'storeHasilPerah']);
+    Route::post('/hasil-perah/update/{id}', [SapiController::class, 'updateHasilPerah']);
 });
 
 ?>
