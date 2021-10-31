@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use File;
-use Auth;
+use File, Auth, Alert;
 
 class LoginController extends Controller
 {
@@ -34,6 +33,11 @@ class LoginController extends Controller
     }
 
     public function dashboard(){
+        if(session('success')){
+            Alert::success(session('success'));
+        }elseif(session('error')){
+            Alert::error(session('error'));
+        }
         return view('dashboard');
     }
 }

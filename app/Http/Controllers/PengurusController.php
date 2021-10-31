@@ -11,7 +11,7 @@ use Alert;
 use File;
 use DataTables;
 
-class UserController extends Controller
+class PengurusController extends Controller
 {
     public function pengurus(){
         $counter = User::where('id_role',2)->count();

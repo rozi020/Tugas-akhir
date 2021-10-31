@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SapiController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\UserConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +29,12 @@ use App\Http\Controllers\HistoryController;
 // Admin Panel - Admin Only
 Route::group(['middleware' => ['auth','checkRole:1']], function(){
     // Data Pengurus
-    Route::get('/pengurus', [UserController::class, 'pengurus']);
-    Route::get('/pengurus/load/table-pengurus', [UserController::class, 'LoadTablePengurus']);
-    Route::get('/pengurus/load/data-pengurus', [UserController::class, 'LoadDataPengurus']);
-    Route::get('/pengurus/delete/{id}', [UserController::class, 'destroy']);
-    Route::post('/pengurus/add', [UserController::class, 'store']);
-    Route::post('/pengurus/update/password/{id}', [UserController::class, 'updatePassword']);
+    Route::get('/pengurus', [PengurusController::class, 'pengurus']);
+    Route::get('/pengurus/load/table-pengurus', [PengurusController::class, 'LoadTablePengurus']);
+    Route::get('/pengurus/load/data-pengurus', [PengurusController::class, 'LoadDataPengurus']);
+    Route::get('/pengurus/delete/{id}', [PengurusController::class, 'destroy']);
+    Route::post('/pengurus/add', [PengurusController::class, 'store']);
+    Route::post('/pengurus/update/password/{id}', [PengurusController::class, 'updatePassword']);
 
     // Log History Pengurus
     Route::get('/history', [HistoryController::class, 'history']);
@@ -45,6 +46,18 @@ Route::group(['middleware' => ['auth','checkRole:1']], function(){
 Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     // Dashboard
     Route::get('/dashboard', [LoginController::class, 'dashboard']);
+
+    // User Configuration
+    // Profile
+    Route::get('/profile', [UserConfigurationController::class, 'profile']);
+    Route::post('/profile/update', [UserConfigurationController::class, 'updateProfile']);
+
+    // Password
+    Route::get('/password', [UserConfigurationController::class, 'password']);
+    Route::post('/password/update', [UserConfigurationController::class, 'updatePassword']);
+
+    // Activity History
+    Route::get('/activity', [UserConfigurationController::class, 'activity']);
 
     // Menu Sapi
     // Daftar Sapi
