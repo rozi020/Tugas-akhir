@@ -22,6 +22,12 @@ class CreateHasilPerahTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->string('jumlah_perah');
+            $table->bigInteger('id_user')->unsigned();
+            $table->foreign('id_user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->string('tanggal_perah');
             $table->timestamps();
         });

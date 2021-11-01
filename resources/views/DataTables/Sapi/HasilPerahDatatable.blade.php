@@ -4,6 +4,7 @@
             <th scope="col">No</th>
             <th scope="col">Kode Sapi</th>
             <th scope="col">Jumlah Perah</th>
+            <th scope="col">Nama Pemerah</th>
             <th scope="col">Tanggal Perah</th>
             <th scope="col">Aksi</th>
         </tr>

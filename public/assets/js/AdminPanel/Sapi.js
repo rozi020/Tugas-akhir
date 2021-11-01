@@ -443,6 +443,11 @@ $(document).ready(function() {
                         className: 'text-center'
                     },
                     {
+                        data: 'nama_user',
+                        name: 'nama_user',
+                        className: 'text-center'
+                    },
+                    {
                         data: 'tanggal_perah',
                         name: 'tanggal_perah',
                         className: 'text-center'

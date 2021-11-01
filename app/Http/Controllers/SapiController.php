@@ -251,13 +251,12 @@ class SapiController extends Controller
 
         $messages = array(
             'id_sapi.required' => 'Kode sapi tidak boleh kosong!',
-            'id_sapi.unique' => 'Kode sapi sudah terpakai!',
             'jumlah_perah.required' => 'Umur sapi tidak boleh kosong!',
             'tanggal_perah.required' => 'Berat sapi tidak boleh kosong!'
         );
 
         $validator = Validator::make($request->all(),[
-            'id_sapi' => 'required|unique:hasil_perah,id_sapi',
+            'id_sapi' => 'required',
             'jumlah_perah' => 'required',
             'tanggal_perah' => 'required'
         ],$messages);
@@ -272,21 +271,16 @@ class SapiController extends Controller
         $hasil = new HasilPerah;
         $hasil->id_sapi = $request->id_sapi;
         $hasil->jumlah_perah = $request->jumlah_perah;
+        $hasil->id_user = auth()->user()->id;
         $hasil->tanggal_perah = $request->tanggal_perah;
         $hasil->save();
-
-        $sapi =DB::table('hasil_perah')
-                ->join('sapi', 'hasil_perah.id_sapi', '=', 'sapi.id')
-                ->select('sapi.kode as kode')
-                ->where('hasil_perah.id',$id)
-                ->first();
 
         // Writing History
         $history = new History;
         $history->user_id = auth()->user()->id;
         $history->nama = auth()->user()->name;
         $history->aksi = "Tambah";
-        $history->keterangan = "Menambahkan Data Pemerahan pada sapi dengan kode : '".$sapi->kode."'";
+        $history->keterangan = "Menambahkan Data Pemerahan pada sapi";
         $history->save();
 
         return response([
@@ -299,6 +293,7 @@ class SapiController extends Controller
         $hasil = HasilPerah::find($id);
         $hasil->id_sapi = $request->edit_id_sapi;
         $hasil->jumlah_perah = $request->edit_jumlah;
+        $hasil->id_user = auth()->user()->id;
         $hasil->tanggal_perah = $request->edit_tanggal;
         $hasil->save();
 
@@ -346,7 +341,8 @@ class SapiController extends Controller
         $hasil = HasilPerah::orderBy('id','desc')->get();
         $hasil =DB::table('hasil_perah')
                 ->join('sapi', 'hasil_perah.id_sapi', '=', 'sapi.id')
-                ->select('hasil_perah.*','sapi.kode as kode_sapi')
+                ->join('users', 'hasil_perah.id_user', '=', 'users.id')
+                ->select('hasil_perah.*','sapi.kode as kode_sapi','users.name as nama_user')
                 ->orderBy('hasil_perah.id','desc')
                 ->get();
 

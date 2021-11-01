@@ -57,9 +57,11 @@
             <div class="form-group">
               <label for="kode">Kode Sapi <i style="color: red;">*</i></label>
               <select class="form-control" name="kode" id="kode" required>
-                  @foreach($data_sapi as $data)
+                  @forelse($data_sapi as $data)
                   <option value="{{$data->kode}}">{{$data->kode}}</option>
-                  @endforeach
+                  @empty
+                  <option value="">Belum ada data sapi</option>
+                  @endforelse
               </select>
             </div>
             <!-- Harga -->

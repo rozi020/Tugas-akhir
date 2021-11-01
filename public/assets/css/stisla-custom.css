@@ -105,10 +105,11 @@ body::-webkit-scrollbar-thumb
 
 .nounderline{
   text-decoration: none !important;
+  color: black;
 }
 
 .nounderline:hover{
-  color: white;
+  color: black;
 }
 
 .profile-input{
