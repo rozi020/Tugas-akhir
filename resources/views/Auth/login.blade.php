@@ -63,7 +63,6 @@
         <div class="absolute-bottom-left index-2">
           <div class="text-light p-5 pb-2">
             <div class="mb-5 pb-3">
-              <h1 class="mb-2 display-4 brand-logo">Sapiku</h1>
             </div>
             Photo by <a class="text-light bb" target="_blank" href="https://unsplash.com/@masrozy">Mas Rozy</a> on <a class="text-light bb" target="_blank" href="https://unsplash.com">Unsplash</a>
           </div>

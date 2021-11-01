@@ -82,9 +82,6 @@
                         <a class="collapse-item" href="{{ url('daftar-sapi') }}">
                             <i class="fas fa-fw fa-clipboard-list"></i> Daftar Sapi
                         </a>
-                        <a class="collapse-item" href="{{ url('sapi-masuk') }}">
-                            <i class="fas fa-fw fa-sign-in-alt"></i> Sapi Masuk
-                        </a>
                         <a class="collapse-item" href="{{ url('sapi-keluar') }}">
                             <i class="fas fa-fw fa-sign-out-alt"></i> Sapi Keluar
                         </a>
@@ -94,7 +91,7 @@
 
             <!-- Hasil Perah -->
             <li id="hasilPerah" class="nav-item">
-                <a class="nav-link" href="{{ url('hasi-perah') }}">
+                <a class="nav-link" href="{{ url('hasil-perah') }}">
                     <i class="fas fa-fw fa-hand-holding-water"></i>
                     <span>Hasil Perah</span></a>
             </li>
@@ -142,31 +139,6 @@
                   
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
                                             
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -177,7 +149,7 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
                                 @if(auth()->user()->avatar == !NULL)
                                 <img class="img-profile rounded-circle"
-                                    src="assets/img/users/avatar/{{auth()->user()->avatar}}">
+                                    src="assets/img/avatar/{{auth()->user()->avatar}}">
                                 @else
                                 <img class="img-profile rounded-circle"
                                     src="assets/img/avatar-stock.jpg">
@@ -186,17 +158,17 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url('profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url('password') }}">
                                     <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Password
+                                    Update Password
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url('activity') }}">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    My Activity
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">

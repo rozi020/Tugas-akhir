@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sapiKeluar extends Model
+class SapiKeluar extends Model
 {
-    use HasFactory;
+    protected $table = 'sapi_keluar';
+    protected $fillable = ['kode','harga','status','keterangan'];
 }

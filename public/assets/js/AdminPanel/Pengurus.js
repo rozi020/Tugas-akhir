@@ -108,7 +108,69 @@ $(document).ready(function() {
                 console.log(err)
             }
         })
+    });
+
+    // OPEN MODAL EDIT PASSWORD
+    $("body").on("click",".btn-edit-password",function(e){
+        e.preventDefault()
+        $(".btn-close").css("display","");
+        $(".btn-save-password").css("display","");
+        $(".btn-loading").css("display","none");
+        $("#EditPasswordModal").modal("show");
+        var id = $(this).attr("data-id");
+
+        $("#id_pengurus").val(id);
     })
+
+    // SAVE EDIT PASSWORD
+    $("body").on("submit","#FormEditPassword", function(e){
+        e.preventDefault()
+        var id = $("#id_pengurus").val();
+        var data = $("#FormEditPassword").serialize();
+        var password = $("#edit_password").val();
+
+        $(".btn-close").css("display","none");
+        $(".btn-save-password").css("display","none");
+        $(".btn-loading").css("display","");
+
+        if(password != ''){
+            $.ajax({
+                type: "post",
+                url: "/pengurus/update/password/"+id,
+                data: data,
+                success: function(response){
+                    LoadPengurus();
+                    $(".btn-close").css("display","");
+                    $(".btn-save-password").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $("#FormEditPassword").trigger("reset");
+                    $("#EditPasswordModal").modal("hide");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Berhasil Memperbarui Password Pengurus',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+        }else{
+            $(".btn-close").css("display","");
+            $(".btn-save-password").css("display","");
+            $(".btn-loading").css("display","none");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Password tidak boleh kosong!',
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
+
+    });
 
     //HAPUS PENGURUS
     $("body").on("click",".btn-delete-pengurus",function(e){

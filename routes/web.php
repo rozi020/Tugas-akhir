@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SapiController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\UserConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +29,12 @@ use App\Http\Controllers\HistoryController;
 // Admin Panel - Admin Only
 Route::group(['middleware' => ['auth','checkRole:1']], function(){
     // Data Pengurus
-    Route::get('/pengurus', [UserController::class, 'pengurus']);
-    Route::get('/pengurus/load/table-pengurus', [UserController::class, 'LoadTablePengurus']);
-    Route::get('/pengurus/load/data-pengurus', [UserController::class, 'LoadDataPengurus']);
-    Route::get('/pengurus/delete/{id}', [UserController::class, 'destroy']);
-    Route::post('/pengurus/add', [UserController::class, 'store']);
+    Route::get('/pengurus', [PengurusController::class, 'pengurus']);
+    Route::get('/pengurus/load/table-pengurus', [PengurusController::class, 'LoadTablePengurus']);
+    Route::get('/pengurus/load/data-pengurus', [PengurusController::class, 'LoadDataPengurus']);
+    Route::get('/pengurus/delete/{id}', [PengurusController::class, 'destroy']);
+    Route::post('/pengurus/add', [PengurusController::class, 'store']);
+    Route::post('/pengurus/update/password/{id}', [PengurusController::class, 'updatePassword']);
 
     // Log History Pengurus
     Route::get('/history', [HistoryController::class, 'history']);
@@ -45,6 +47,18 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     // Dashboard
     Route::get('/dashboard', [LoginController::class, 'dashboard']);
 
+    // User Configuration
+    // Profile
+    Route::get('/profile', [UserConfigurationController::class, 'profile']);
+    Route::post('/profile/update', [UserConfigurationController::class, 'updateProfile']);
+
+    // Password
+    Route::get('/password', [UserConfigurationController::class, 'password']);
+    Route::post('/password/update', [UserConfigurationController::class, 'updatePassword']);
+
+    // Activity History
+    Route::get('/activity', [UserConfigurationController::class, 'activity']);
+
     // Menu Sapi
     // Daftar Sapi
     Route::get('/daftar-sapi', [SapiController::class, 'daftarsapi']);
@@ -52,11 +66,22 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/daftar-sapi/load/data-daftarsapi', [SapiController::class, 'LoadDataDaftarSapi']);
     Route::get('/daftar-sapi/delete/{id}', [SapiController::class, 'destroyDaftarSapi']);
     Route::post('/daftar-sapi/add', [SapiController::class, 'storeDaftarSapi']);
+    Route::post('/daftar-sapi/update/{id}', [SapiController::class, 'updateDaftarSapi']);
 
-    // Sapi Masuk
-    Route::get('/sapi-masuk', [SapiController::class, 'sapimasuk']);
+    // Sapi Keluar
     Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
+    Route::get('/sapi-keluar/load/table-sapikeluar', [SapiController::class, 'LoadTableSapiKeluar']);
+    Route::get('/sapi-keluar/load/data-sapikeluar', [SapiController::class, 'LoadDataSapiKeluar']);
+    Route::post('/sapi-keluar/add', [SapiController::class, 'storeSapiKeluar']);
+    Route::post('/sapi-keluar/update/{id}', [SapiController::class, 'updateSapiKeluar']);
+
+    // Hasil Perah
     Route::get('/hasil-perah', [SapiController::class, 'hasilperah']);
+    Route::get('/hasil-perah/load/table-hasilperah', [SapiController::class, 'LoadTableHasilPerah']);
+    Route::get('/hasil-perah/load/data-hasilperah', [SapiController::class, 'LoadDataHasilPerah']);
+    Route::get('/hasil-perah/delete/{id}', [SapiController::class, 'destroyHasilPerah']);
+    Route::post('/hasil-perah/add', [SapiController::class, 'storeHasilPerah']);
+    Route::post('/hasil-perah/update/{id}', [SapiController::class, 'updateHasilPerah']);
 });
 
 ?>

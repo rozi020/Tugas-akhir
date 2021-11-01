@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 use App\Models\User;
-use File;
-use Auth;
+use App\Models\Sapi;
+use App\Models\SapiKeluar;
+use App\Models\History;
+use File, Auth, Alert;
 
 class LoginController extends Controller
 {
     // Menuju Ke Halaman Login
     public function login(){
+        //Delete History 60 Hari Sekali 
+        History::where('created_at', '<', Carbon::now()->subDays(60))->delete();
+
         return view('Auth.login');
     }
 
@@ -34,6 +40,18 @@ class LoginController extends Controller
     }
 
     public function dashboard(){
-        return view('dashboard');
+
+        if(session('success')){
+            Alert::success(session('success'));
+        }elseif(session('error')){
+            Alert::error(session('error'));
+        }
+
+        $pengurus = User::where('id_role',2)->count();
+        $sapi = Sapi::count();
+        $sapiKeluar = SapiKeluar::count();
+        $activity = History::where('user_id',auth()->user()->id)->get();
+
+        return view('dashboard', compact('pengurus','sapi','sapiKeluar','activity'));
     }
 }

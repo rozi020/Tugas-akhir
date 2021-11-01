@@ -11,7 +11,7 @@ use Alert;
 use File;
 use DataTables;
 
-class UserController extends Controller
+class PengurusController extends Controller
 {
     public function pengurus(){
         $counter = User::where('id_role',2)->count();
@@ -73,6 +73,25 @@ class UserController extends Controller
         ]);
     }
 
+    public function updatePassword(Request $request, $id){
+
+        $user = User::find($id);
+        $user->password = bcrypt($request->edit_password);
+        $user->save();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Edit";
+        $history->keterangan = "Mengubah password Pengurus pada Username : '".$user->username."'";
+        $history->save();
+
+        return response([
+            'message' => 'update successfully'
+        ]);
+    }
+
     public function destroy($id){
         // Hapus Avatar
         $avatar = User::select('avatar')->where('id', $id)->get()->first();
@@ -107,7 +126,10 @@ class UserController extends Controller
                 return date('H:i:s | d-m-Y', strtotime($pengurus->created_at));
             })
             ->addColumn('aksi', function($row){
-                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-name="'.$row->name.'" class="btn btn-outline-danger btn-delete-pengurus">
+                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" class="btn btn-outline-success btn-edit-password">
+                <i class="fas fa-key"></i>
+                </a>
+                <a href="javascript:void(0)" data-id="'.$row->id.'" data-name="'.$row->name.'" class="btn btn-outline-danger btn-delete-pengurus">
                 <i class="fas fa-trash"></i>
                 </a>';
                 return $btn;
