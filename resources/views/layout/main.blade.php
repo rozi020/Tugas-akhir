@@ -103,13 +103,6 @@
                     <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>Pengeluaran</span></a>
             </li>
-
-            <!-- Laporan Keuangan -->
-            <li id="laporan" class="nav-item">
-                <a class="nav-link" href="{{ url('laporan') }}">
-                    <i class="fas fa-fw fa-file-invoice-dollar"></i>
-                    <span>Laporan Keuangan</span></a>
-            </li>
             @endif
 
             <!-- Divider -->

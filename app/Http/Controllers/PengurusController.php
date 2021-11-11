@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use App\Models\History;
-use Validator;
-use Alert;
-use File;
-use DataTables;
+use Validator, Alert, File, DataTables;
 
 class PengurusController extends Controller
 {

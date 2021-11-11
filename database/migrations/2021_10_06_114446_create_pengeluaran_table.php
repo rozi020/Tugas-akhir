@@ -15,8 +15,8 @@ class CreatePengeluaranTable extends Migration
     {
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->id();
-            $table->string('jumlah_pengeluaran');
-            $table->string('tanggal_pengeluaran');
+            $table->string('jumlah');
+            $table->string('tanggal');
             $table->string('keterangan');
             $table->timestamps();
         });

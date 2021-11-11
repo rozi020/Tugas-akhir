@@ -107,7 +107,7 @@ $(document).ready(function() {
             error: function(err){
                 console.log(err)
             }
-        })
+        });
     });
 
     // OPEN MODAL EDIT PASSWORD

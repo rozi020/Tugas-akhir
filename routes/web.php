@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SapiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\UserConfigurationController;
 
@@ -40,6 +41,14 @@ Route::group(['middleware' => ['auth','checkRole:1']], function(){
     Route::get('/history', [HistoryController::class, 'history']);
     Route::get('/history/load/table-history', [HistoryController::class, 'LoadTableHistory']);
     Route::get('/history/load/data-history', [HistoryController::class, 'LoadDataHistory']);
+
+    // Pengeluaran
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index']);
+    Route::get('/pengeluaran/load/table-pengeluaran', [PengeluaranController::class, 'LoadTablePengeluaran']);
+    Route::get('/pengeluaran/load/data-pengeluaran', [PengeluaranController::class, 'LoadDataPengeluaran']);
+    Route::get('/pengeluaran/delete/{id}', [PengeluaranController::class, 'destroy']);
+    Route::post('/pengeluaran/add', [PengeluaranController::class, 'store']);
+    Route::post('/pengeluaran/update/{id}', [PengeluaranController::class, 'update']);
 });
 
 // Admin Panel - Admin dan Pengurus bisa akses
@@ -72,6 +81,7 @@ Route::group(['middleware' => ['auth','checkRole:1,2']], function(){
     Route::get('/sapi-keluar', [SapiController::class, 'sapikeluar']);
     Route::get('/sapi-keluar/load/table-sapikeluar', [SapiController::class, 'LoadTableSapiKeluar']);
     Route::get('/sapi-keluar/load/data-sapikeluar', [SapiController::class, 'LoadDataSapiKeluar']);
+    Route::get('/sapi-keluar/delete/{id}', [SapiController::class, 'destroySapiKeluar']);
     Route::post('/sapi-keluar/add', [SapiController::class, 'storeSapiKeluar']);
     Route::post('/sapi-keluar/update/{id}', [SapiController::class, 'updateSapiKeluar']);
 

@@ -325,7 +325,7 @@ $(document).ready(function() {
                 error: function(err){
                     console.log(err);
                 }
-            })
+            });
         }else{
             $(".btn-submit-sapikeluar").css("display","");
             $(".btn-loading").css("display","none");
@@ -397,7 +397,7 @@ $(document).ready(function() {
                 error: function(err){
                     console.log(err);
                 }
-            })
+            });
         }else{
             $(".btn-close").css("display","");
             $(".btn-save-sapikeluar").css("display","");
@@ -411,6 +411,37 @@ $(document).ready(function() {
             });
         }
 
+    });
+
+    //DELETE SAPI KELUAR
+    $("body").on("click",".btn-delete-sapikeluar", function(e){
+        e.preventDefault()
+        var id = $(this).attr("data-id");
+        var kode = $(this).attr("data-kode");
+
+        Swal.fire({
+            title: 'Hapus data sapi keluar, kode sapi : ' + kode + '?',
+            text: 'Anda tidak dapat mengurungkan aksi ini!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: 'get',
+                    url: '/sapi-keluar/delete/' + id,
+                    success: function(response) {
+                        Swal.fire('Deleted!', kode + ' telah dihapus.', 'success');
+                        LoadTableSapiKeluar();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
     });
 
 
@@ -473,7 +504,7 @@ $(document).ready(function() {
         $("#HasilPerahModal").modal("show");
     });
 
-    //SUBMIT SAPI
+    //SUBMIT HASIL PERAH
     $("body").on("submit","#FormHasilPerah", function(e){
         e.preventDefault()
         $(".btn-submit-hasilperah").css("display","none");
@@ -522,7 +553,7 @@ $(document).ready(function() {
 
     });
 
-    // OPEN MODAL EDIT SAPI
+    // OPEN MODAL EDIT HASIL PERAH
     $("body").on("click",".btn-edit-hasilperah",function(e){
         e.preventDefault()
         $(".btn-close").css("display","");
@@ -540,7 +571,7 @@ $(document).ready(function() {
         $("#edit_tanggal").val(tanggal);
     })
 
-    // SAVE EDIT SAPI
+    // SAVE EDIT HASIL PERAH
     $("body").on("submit","#FormEditHasilPerah", function(e){
         e.preventDefault()
         var id = $("#id_perah").val();

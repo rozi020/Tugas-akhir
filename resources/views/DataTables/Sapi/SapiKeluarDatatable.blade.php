@@ -7,7 +7,7 @@
             <th scope="col">Status</th>
             <th scope="col">Keterangan</th>
             <th scope="col">Tanggal Keluar</th>
-            <th scope="col">Edit Data</th>
+            <th scope="col">Aksi</th>
         </tr>
     </thead>
 </table>
