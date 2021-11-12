@@ -177,7 +177,7 @@ class SapiController extends Controller
         $sapi_keluar->save();
 
         // Delete data sapi di tabel daftar
-        $delete = Sapi::select('id')->where('kode',$request->kode)->first()->delete();
+        Sapi::where('kode',$request->kode)->first()->delete();
 
         // Writing History
         $history = new History;
@@ -206,6 +206,9 @@ class SapiController extends Controller
             ->addColumn('aksi', function($row){
                 $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode.'" data-harga="'.$row->harga.'" data-status="'.$row->status.'" data-keterangan="'.$row->keterangan.'" class="btn btn-outline-success btn-edit-sapikeluar">
                 <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a href="javascript:void(0)" data-id="'.$row->id.'" data-kode="'.$row->kode.'" class="btn btn-outline-danger btn-delete-sapikeluar">
+                    <i class="fas fa-trash"></i>
                 </a>';
                 return $btn;
          })
@@ -230,6 +233,23 @@ class SapiController extends Controller
 
         return response([
             'message' => 'update successfully'
+        ]);
+    }
+
+    public function destroySapiKeluar($id){
+        $sapi = SapiKeluar::find($id);
+        $sapi->delete();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Hapus";
+        $history->keterangan = "Menghapus Data Sapi Keluar.";
+        $history->save();
+
+        return response([
+            'message' => "delete sukses"
         ]);
     }
 

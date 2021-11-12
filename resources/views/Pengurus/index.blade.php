@@ -55,18 +55,18 @@
             @csrf
             <div class="form-group">
               <label for="name">Nama Lengkap <i style="color: red;">*</i></label>
-              <input name="name" type="text" class="form-control" id="name" placeholder="Nama Lengkap" required="">
+              <input name="name" type="text" class="form-control" id="name" placeholder="Nama Lengkap">
             </div>
             <!-- Username -->
             <div class="form-group">
               <label for="username">Username <i style="color: red;">*</i></label>
-              <input name="username" type="text" class="form-control" id="username" placeholder="Username" required="">
+              <input name="username" type="text" class="form-control" id="username" placeholder="Username">
             </div>
             <!-- Password -->
             <div class="form-group">
               <label for="password">Default Password <i style="color: red;">*</i></label>
               <div class="input-group" id="show_hide_password">
-                <input name="password" type="password" class="form-control" id="password" minlength="8" placeholder="Password" required="">
+                <input name="password" type="password" class="form-control" id="password" minlength="8" placeholder="Password">
                 <a href="">
                     <div class="input-group-addon eye">
                         <i class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -77,7 +77,7 @@
             <!-- Phone -->
             <div class="form-group">
               <label for="phone_number">Nomor Telepon <i style="color: red;">*</i></label>
-              <input name="phone_number" type="tel" class="form-control" id="phone_number" placeholder="Nomor Telepon" required="">
+              <input name="phone_number" type="tel" class="form-control" id="phone_number" placeholder="Nomor Telepon">
             </div>
             <br>
             <span style="font-size: 12px;"><i style="color: red;"> * </i> : Data harus terisi</span>

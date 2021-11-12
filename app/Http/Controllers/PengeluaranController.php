@@ -2,84 +2,143 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pengeluaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Pengeluaran;
+use App\Models\History;
+use Alert, Validator, DataTables;
 
 class PengeluaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $counter = Pengeluaran::count();
+
+        if(session('success')){
+            Alert::success(session('success'));
+        }elseif(session('error')){
+            Alert::error(session('error'));
+        }
+
+        return view('Pengeluaran.index', compact('counter'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request){
+
+        $messages = array(
+            'jumlah.required' => 'Jumlah Pengeluaran tidak boleh kosong!',
+            'tanggal.required' => 'Tanggal tidak boleh kosong!',
+            'keterangan.required' => 'Keterangan Pengeluaran tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'jumlah' => 'required',
+            'tanggal' => 'required',
+            'keterangan' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
+
+        $pengeluaran = new Pengeluaran;
+        $pengeluaran->jumlah = $request->jumlah;
+        $pengeluaran->tanggal = $request->tanggal;
+        $pengeluaran->keterangan = $request->keterangan;
+        $pengeluaran->save();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Tambah";
+        $history->keterangan = "Menambahkan Data Pengeluaran";
+        $history->save();
+
+        return response([
+            'message' => 'sukses',
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function update(Request $request, $id){
+        $messages = array(
+            'edit_jumlah.required' => 'Jumlah Pengeluaran tidak boleh kosong!',
+            'edit_tanggal.required' => 'Tanggal tidak boleh kosong!',
+            'edit_keterangan.required' => 'Keterangan Pengeluaran tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'edit_jumlah' => 'required',
+            'edit_tanggal' => 'required',
+            'edit_keterangan' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
+
+        $pengeluaran = Pengeluaran::find($id);
+        $pengeluaran->jumlah = $request->edit_jumlah;
+        $pengeluaran->tanggal = $request->edit_tanggal;
+        $pengeluaran->keterangan = $request->edit_keterangan;
+        $pengeluaran->save();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Edit";
+        $history->keterangan = "Mengedit Data Pengeluaran";
+        $history->save();
+
+        return response([
+            'message' => 'update successfully'
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\pengeluaran  $pengeluaran
-     * @return \Illuminate\Http\Response
-     */
-    public function show(pengeluaran $pengeluaran)
-    {
-        //
+    public function destroy($id){
+        $pengeluaran = Pengeluaran::find($id);
+        $pengeluaran->delete();
+
+        // Writing History
+        $history = new History;
+        $history->user_id = auth()->user()->id;
+        $history->nama = auth()->user()->name;
+        $history->aksi = "Hapus";
+        $history->keterangan = "Menghapus Data Pengeluaran";
+        $history->save();
+
+        return response([
+            'message' => "delete sukses"
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\pengeluaran  $pengeluaran
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(pengeluaran $pengeluaran)
-    {
-        //
+    public function LoadTablePengeluaran(){
+        return view('DataTables.Pengeluaran.PengeluaranDatatable');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\pengeluaran  $pengeluaran
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, pengeluaran $pengeluaran)
-    {
-        //
-    }
+    public function LoadDataPengeluaran(){
+        $pengeluaran = Pengeluaran::orderBy('id','desc')->get();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\pengeluaran  $pengeluaran
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(pengeluaran $pengeluaran)
-    {
-        //
+            return Datatables::of($pengeluaran)->addIndexColumn()
+            ->editColumn('tanggal', function($pengeluaran){
+                return date('d-m-Y', strtotime($pengeluaran->tanggal));
+            })
+            ->addColumn('aksi', function($row){
+                $btn =  '<a href="javascript:void(0)" data-id="'.$row->id.'" data-jumlah="'.$row->jumlah.'" data-tanggal="'.$row->tanggal.'" data-keterangan="'.$row->keterangan.'" class="btn btn-outline-success btn-edit-pengeluaran">
+                <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a href="javascript:void(0)" data-id="'.$row->id.'" class="btn btn-outline-danger btn-delete-pengeluaran">
+                <i class="fas fa-trash"></i>
+                </a>';
+                return $btn;
+         })
+         ->rawColumns(['aksi'])
+            ->make(true);
     }
 }
