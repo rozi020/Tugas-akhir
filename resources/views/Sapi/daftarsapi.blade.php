@@ -56,27 +56,27 @@
             <!-- Kode Sapi -->
             <div class="form-group">
               <label for="kode">Kode Sapi <i style="color: red;">*</i></label>
-              <input name="kode" type="text" class="form-control" id="kode" placeholder="Kode Sapi" required="">
+              <input name="kode" type="text" class="form-control" id="kode" placeholder="Kode Sapi">
             </div>
             <!-- Username -->
             <div class="form-group">
               <label for="umur">Umur <i style="color: red;">*</i></label>
-              <input name="umur" type="number" class="form-control" id="umur" placeholder="Umur" required="">
+              <input name="umur" type="number" class="form-control" id="umur" placeholder="Umur">
             </div>
             <!-- Berat -->
             <div class="form-group">
               <label for="berat">Berat <i style="color: red;">*</i></label>
-              <input name="berat" type="number" class="form-control" id="berat" placeholder="Berat" required="">
+              <input name="berat" type="number" class="form-control" id="berat" placeholder="Berat">
             </div>
             <!-- Jenis Sapi -->
             <div class="form-group">
               <label for="jenis">Jenis Sapi <i style="color: red;">*</i></label>
-              <input name="jenis" type="text" class="form-control" id="jenis" placeholder="Jenis Sapi" required="">
+              <input name="jenis" type="text" class="form-control" id="jenis" placeholder="Jenis Sapi">
             </div>
             <!-- Status -->
             <div class="form-group">
               <label for="status">Status <i style="color: red;">*</i></label>
-              <input name="status" type="text" class="form-control" id="status" placeholder="Status" required="">
+              <input name="status" type="text" class="form-control" id="status" placeholder="Status">
             </div>
 
             <br>
@@ -116,7 +116,7 @@
             </div>
             <!-- Umur -->
             <div class="form-group">
-              <label for="edit_umur">Umur</label>
+              <label for="edit_umur">Umur <i style="color: red;">*</i></label>
               <input name="edit_umur" type="number" class="form-control" id="edit_umur" placeholder="Umur">
             </div>
             <!-- Berat -->

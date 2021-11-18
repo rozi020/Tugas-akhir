@@ -56,7 +56,7 @@
             <!-- Kode Sapi -->
             <div class="form-group">
                 <label for="id_sapi">Kode Sapi <i style="color: red;">*</i></label>
-                <select class="form-control" name="id_sapi" id="id_sapi" required>
+                <select class="form-control" name="id_sapi" id="id_sapi">
                     @forelse($data_sapi as $data)
                     <option value="{{$data->id}}">{{$data->kode}}</option>
                     @empty
@@ -67,12 +67,12 @@
             <!-- Jumlah -->
             <div class="form-group">
               <label for="jumlah_perah">Jumlah Perah <i style="color: red;">*</i></label>
-              <input name="jumlah_perah" type="number" class="form-control" id="jumlah_perah" placeholder="(Liter)" required="">
+              <input name="jumlah_perah" type="number" class="form-control" id="jumlah_perah" placeholder="(Liter)">
             </div>
             <!-- Tanggal -->
             <div class="form-group">
               <label for="tanggal_perah">Tanggal Perah <i style="color: red;">*</i></label>
-              <input name="tanggal_perah" type="date" class="form-control" id="tanggal_perah" placeholder="Tanggal Perah" required="">
+              <input name="tanggal_perah" type="date" class="form-control" id="tanggal_perah" placeholder="Tanggal Perah">
             </div>
 
             <br>
@@ -107,7 +107,7 @@
             <input type="hidden" name="id_perah" id="id_perah">
             <!-- Kode Sapi -->
             <div class="form-group">
-                <select class="form-control" name="edit_id_sapi" id="edit_id_sapi" required>
+                <select class="form-control" name="edit_id_sapi" id="edit_id_sapi">
                     @foreach($data_sapi as $data)
                     <option value="{{$data->id}}">{{$data->kode}}</option>
                     @endforeach
@@ -116,12 +116,12 @@
             <!-- Jumlah -->
             <div class="form-group">
               <label for="edit_jumlah">Jumlah Perah <i style="color: red;">*</i></label>
-              <input name="edit_jumlah" type="number" class="form-control" id="edit_jumlah" placeholder="(Liter)" required="">
+              <input name="edit_jumlah" type="number" class="form-control" id="edit_jumlah" placeholder="(Liter)">
             </div>
             <!-- Tanggal -->
             <div class="form-group">
               <label for="edit_tanggal">Tanggal Perah <i style="color: red;">*</i></label>
-              <input name="edit_tanggal" type="date" class="form-control" id="edit_tanggal" placeholder="Tanggal Perah" required="">
+              <input name="edit_tanggal" type="date" class="form-control" id="edit_tanggal" placeholder="Tanggal Perah">
             </div>
 
             <br>

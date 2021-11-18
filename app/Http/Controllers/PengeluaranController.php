@@ -23,7 +23,6 @@ class PengeluaranController extends Controller
     }
 
     public function store(Request $request){
-
         $messages = array(
             'jumlah.required' => 'Jumlah Pengeluaran tidak boleh kosong!',
             'tanggal.required' => 'Tanggal tidak boleh kosong!',

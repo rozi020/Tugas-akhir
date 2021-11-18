@@ -77,7 +77,6 @@ $(document).ready(function() {
             url: "/pengurus/add",
             data: data,
             success: function(response){
-
                 if(response.hasOwnProperty('error')){
                     $(".btn-close").css("display","")
                     $(".btn-loading").css("display","none")
@@ -127,18 +126,26 @@ $(document).ready(function() {
         e.preventDefault()
         var id = $("#id_pengurus").val();
         var data = $("#FormEditPassword").serialize();
-        var password = $("#edit_password").val();
 
         $(".btn-close").css("display","none");
         $(".btn-save-password").css("display","none");
         $(".btn-loading").css("display","");
 
-        if(password != ''){
-            $.ajax({
-                type: "post",
-                url: "/pengurus/update/password/"+id,
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/pengurus/update/password/"+id,
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","")
+                    $(".btn-loading").css("display","none")
+                    $(".btn-save-password").css("display","")
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadPengurus();
                     $(".btn-close").css("display","");
                     $(".btn-save-password").css("display","");
@@ -152,23 +159,13 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            })
-        }else{
-            $(".btn-close").css("display","");
-            $(".btn-save-password").css("display","");
-            $(".btn-loading").css("display","none");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Password tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+                
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 

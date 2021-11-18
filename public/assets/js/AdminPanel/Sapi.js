@@ -76,24 +76,28 @@ $(document).ready(function() {
         $(".btn-loading").css("display","");
         $(".btn-close").css("display","none");
         var data = $("#FormDaftarSapi").serialize();
-        var kode = $("#kode").val();
-        var umur = $("#umur").val();
-        var berat = $("#berat").val();
-        var jenis = $("#jenis").val();
-        var status = $("#status").val();
 
-        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != ''){
-            $.ajax({
-                type: "post",
-                url: "/daftar-sapi/add",
-                data: data,
-                success: function(response){
-                    LoadTableDaftarSapi();
+        $.ajax({
+            type: "post",
+            url: "/daftar-sapi/add",
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-submit-daftarsapi").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-submit-daftarsapi").css("display","");
                     $("#DaftarSapiModal").modal("hide");
                     $("#FormDaftarSapi").trigger("reset");
-                    $(".btn-submit-daftarsapi").css("display","");
-                    $(".btn-loading").css("display","none");
-                    $(".btn-close").css("display","");
+                    LoadTableDaftarSapi();
                     Swal.fire({
                         icon: 'success',
                         title: 'Sukses',
@@ -101,23 +105,12 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            })
-        }else{
-            $(".btn-submit-daftarsapi").css("display","");
-            $(".btn-loading").css("display","none");
-            $(".btn-close").css("display","");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
@@ -148,22 +141,26 @@ $(document).ready(function() {
         e.preventDefault()
         var id = $("#id_sapi").val();
         var data = $("#FormEditDaftarSapi").serialize();
-        var kode = $("#edit_kode").val();
-        var umur = $("#edit_umur").val();
-        var berat = $("#edit_berat").val();
-        var jenis = $("#edit_jenis").val();
-        var status = $("#edit_status").val();
 
         $(".btn-close").css("display","none");
         $(".btn-save-daftarsapi").css("display","none");
         $(".btn-loading").css("display","");
 
-        if(kode != '' && umur != '' && berat != '' && jenis != '' && status != ''){
-            $.ajax({
-                type: "post",
-                url: "/daftar-sapi/update/"+id,
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/daftar-sapi/update/"+id,
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-save-daftarsapi").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadTableDaftarSapi();
                     $(".btn-close").css("display","");
                     $(".btn-save-daftarsapi").css("display","");
@@ -177,23 +174,12 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
-                }
-            })
-        }else{
-            $(".btn-close").css("display","");
-            $(".btn-save-daftarsapi").css("display","");
-            $(".btn-loading").css("display","none");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+                }  
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
@@ -298,16 +284,22 @@ $(document).ready(function() {
         $(".btn-loading").css("display","");
         $(".btn-close").css("display","none");
         var data = $("#FormSapiKeluar").serialize();
-        var kode = $("#kode").val();
-        var status = $("#status").val();
-        var keterangan = $("#jenis").val();
 
-        if(kode != '' && status != '' && keterangan != ''){
-            $.ajax({
-                type: "post",
-                url: "/sapi-keluar/add",
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/sapi-keluar/add",
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-submit-sapikeluar").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadTableSapiKeluar();
                     $("#SapiKeluarModal").modal("hide");
                     $("#FormSapiKeluar").trigger("reset");
@@ -321,23 +313,13 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            });
-        }else{
-            $(".btn-submit-sapikeluar").css("display","");
-            $(".btn-loading").css("display","none");
-            $(".btn-close").css("display","");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+                
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
@@ -366,20 +348,26 @@ $(document).ready(function() {
         e.preventDefault()
         var id = $("#id_sapi").val();
         var data = $("#FormEditSapiKeluar").serialize();
-        var harga = $("#edit_harga").val();
-        var status = $("#edit_status").val();
-        var keterangan = $("#edit_keterangan").val();
 
         $(".btn-close").css("display","none");
         $(".btn-save-sapikeluar").css("display","none");
         $(".btn-loading").css("display","");
 
-        if(status != '' && keterangan != ''){
-            $.ajax({
-                type: "post",
-                url: "/sapi-keluar/update/"+id,
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/sapi-keluar/update/"+id,
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-save-sapikeluar").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadTableSapiKeluar();
                     $(".btn-close").css("display","");
                     $(".btn-save-sapikeluar").css("display","");
@@ -393,23 +381,12 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            });
-        }else{
-            $(".btn-close").css("display","");
-            $(".btn-save-sapikeluar").css("display","");
-            $(".btn-loading").css("display","none");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
@@ -511,15 +488,22 @@ $(document).ready(function() {
         $(".btn-loading").css("display","");
         $(".btn-close").css("display","none");
         var data = $("#FormHasilPerah").serialize();
-        var jumlah = $("#jumlah_perah").val();
-        var tanggal = $("#tanggal_perah").val();
 
-        if(jumlah != '' && tanggal != ''){
-            $.ajax({
-                type: "post",
-                url: "/hasil-perah/add",
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/hasil-perah/add",
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-submit-hasilperah").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadTableHasilPerah();
                     $("#HasilPerahModal").modal("hide");
                     $("#FormHasilPerah").trigger("reset");
@@ -533,23 +517,13 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            })
-        }else{
-            $(".btn-submit-hasilperah").css("display","");
-            $(".btn-loading").css("display","none");
-            $(".btn-close").css("display","");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+                
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
@@ -576,20 +550,26 @@ $(document).ready(function() {
         e.preventDefault()
         var id = $("#id_perah").val();
         var data = $("#FormEditHasilPerah").serialize();
-        var ids = $("#edit_id_sapi").val();
-        var jumlah = $("#edit_jumlah").val();
-        var tanggal = $("#edit_tanggal").val();
 
         $(".btn-close").css("display","none");
         $(".btn-save-hasilperah").css("display","none");
         $(".btn-loading").css("display","");
 
-        if(jumlah != '' && tanggal != ''){
-            $.ajax({
-                type: "post",
-                url: "/hasil-perah/update/"+id,
-                data: data,
-                success: function(response){
+        $.ajax({
+            type: "post",
+            url: "/hasil-perah/update/"+id,
+            data: data,
+            success: function(response){
+                if(response.hasOwnProperty('error')){
+                    $(".btn-close").css("display","");
+                    $(".btn-loading").css("display","none");
+                    $(".btn-save-hasilperah").css("display","");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ooopss...',
+                        text: response.error
+                    });
+                }else{
                     LoadTableHasilPerah();
                     $(".btn-close").css("display","");
                     $(".btn-save-hasilperah").css("display","");
@@ -603,23 +583,12 @@ $(document).ready(function() {
                         timer: 1200,
                         showConfirmButton: false
                     });
-                },
-                error: function(err){
-                    console.log(err);
                 }
-            })
-        }else{
-            $(".btn-close").css("display","");
-            $(".btn-save-hasilperah").css("display","");
-            $(".btn-loading").css("display","none");
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form tidak boleh kosong!',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
 
     });
 
