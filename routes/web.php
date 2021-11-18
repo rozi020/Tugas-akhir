@@ -49,7 +49,6 @@ Route::group(['middleware' => ['auth','checkRole:1']], function(){
     Route::get('/pengeluaran/delete/{id}', [PengeluaranController::class, 'destroy']);
     Route::post('/pengeluaran/add', [PengeluaranController::class, 'store']);
     Route::post('/pengeluaran/update/{id}', [PengeluaranController::class, 'update']);
-    Route::get('/pengeluaran/export', [PengeluaranController::class, 'export']);
 });
 
 // Admin Panel - Admin dan Pengurus bisa akses

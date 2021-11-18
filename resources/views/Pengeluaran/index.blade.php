@@ -21,8 +21,7 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
-                    <button type="button" class="btn btn-primary mr-2 mb-1" id="btn-modal-pengeluaran"><i class="fa fa-plus"></i> Tambah Pengeluaran</button>
-                    <a href="{{ url('/pengeluaran/export') }}" class="btn btn-success mb-1"><i class="fa fa-download"></i> Export</a>
+                    <button type="button" class="btn btn-primary" id="btn-modal-pengeluaran"><i class="fa fa-plus"></i> Tambah Pengeluaran</button>
                 </div>
 
                 <div class="counter text-left ml-4">
