@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Exports\PengeluaranExport;
 use App\Models\Pengeluaran;
 use App\Models\History;
-use Alert, Validator, DataTables;
+use Alert, Validator, DataTables, Excel;
 
 class PengeluaranController extends Controller
 {
@@ -139,5 +140,11 @@ class PengeluaranController extends Controller
          })
          ->rawColumns(['aksi'])
             ->make(true);
+    }
+
+    // Export Excel
+    public function export()
+    {
+        return Excel::download(new PengeluaranExport, 'Pengeluaran - '.date('his-dmY').'.xlsx');
     }
 }
