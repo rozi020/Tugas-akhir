@@ -50,7 +50,7 @@ class LoginController extends Controller
         $pengurus = User::where('id_role',2)->count();
         $sapi = Sapi::count();
         $sapiKeluar = SapiKeluar::count();
-        $activity = History::where('user_id',auth()->user()->id)->get();
+        $activity = History::where('user_id',auth()->user()->id)->orderBy('created_at','desc')->get();
 
         return view('dashboard', compact('pengurus','sapi','sapiKeluar','activity'));
     }

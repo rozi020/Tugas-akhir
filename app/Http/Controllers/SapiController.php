@@ -73,6 +73,26 @@ class SapiController extends Controller
     }
 
     public function updateDaftarSapi(Request $request, $id){
+        $messages = array(
+            'edit_umur.required' => 'Umur sapi tidak boleh kosong!',
+            'edit_berat.required' => 'Berat sapi tidak boleh kosong!',
+            'edit_jenis.required' => 'Jenis sapi tidak boleh kosong!',
+            'edit_status.required' => 'Status sapi tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'edit_umur' => 'required',
+            'edit_berat' => 'required',
+            'edit_jenis' => 'required',
+            'edit_status' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
 
         $sapi = Sapi::find($id);
         $sapi->umur = $request->edit_umur;
@@ -217,6 +237,23 @@ class SapiController extends Controller
     }
 
     public function updateSapiKeluar(Request $request, $id){
+        $messages = array(
+            'edit_status.required' => 'Status sapi tidak boleh kosong!',
+            'edit_keterangan.required' => 'Keterangan sapi tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'edit_status' => 'required',
+            'edit_keterangan' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
+
         $sapi_keluar = SapiKeluar::find($id);
         $sapi_keluar->harga = $request->edit_harga;
         $sapi_keluar->status = $request->edit_status;
@@ -268,11 +305,10 @@ class SapiController extends Controller
     }
 
     public function storeHasilPerah(Request $request){
-
         $messages = array(
             'id_sapi.required' => 'Kode sapi tidak boleh kosong!',
-            'jumlah_perah.required' => 'Umur sapi tidak boleh kosong!',
-            'tanggal_perah.required' => 'Berat sapi tidak boleh kosong!'
+            'jumlah_perah.required' => 'Jumlah perah tidak boleh kosong!',
+            'tanggal_perah.required' => 'Tanggal tidak boleh kosong!'
         );
 
         $validator = Validator::make($request->all(),[
@@ -309,6 +345,24 @@ class SapiController extends Controller
     }
 
     public function updateHasilPerah(Request $request, $id){
+        $messages = array(
+            'edit_id_sapi.required' => 'Kode sapi tidak boleh kosong!',
+            'edit_jumlah.required' => 'Jumlah perah tidak boleh kosong!',
+            'edit_tanggal.required' => 'Tanggal tidak boleh kosong!'
+        );
+
+        $validator = Validator::make($request->all(),[
+            'edit_id_sapi' => 'required',
+            'edit_jumlah' => 'required',
+            'edit_tanggal' => 'required'
+        ],$messages);
+
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+                return response()->json([
+                    'error' => $error,
+                ]);
+        }
 
         $hasil = HasilPerah::find($id);
         $hasil->id_sapi = $request->edit_id_sapi;

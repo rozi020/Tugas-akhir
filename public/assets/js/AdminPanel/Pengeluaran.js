@@ -66,7 +66,6 @@ $(document).ready(function() {
             url: "/pengeluaran/add",
             data: data,
             success: function(response){
-
                 if(response.hasOwnProperty('error')){
                     $(".btn-close").css("display","")
                     $(".btn-loading").css("display","none")
@@ -122,9 +121,6 @@ $(document).ready(function() {
         e.preventDefault()
         var id = $("#id").val();
         var data = $("#FormEditPengeluaran").serialize();
-        var jumlah = $("#edit_jumlah").val();
-        var tanggal = $("#edit_tanggal").val();
-        var keterangan = $("#edit_keterangan").val();
 
         $(".btn-close").css("display","none");
         $(".btn-save-pengeluaran").css("display","none");

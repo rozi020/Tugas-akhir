@@ -114,7 +114,7 @@
             <div class="form-group">
               <label for="edit_password">Password Baru <i style="color: red;">*</i></label>
               <div class="input-group" id="show_hide_password">
-                <input name="edit_password" type="password" class="form-control" id="edit_password" minlength="8" placeholder="Password Baru" required="">
+                <input name="edit_password" type="password" class="form-control" id="edit_password" minlength="8" placeholder="Password Baru">
                 <a href="">
                     <div class="input-group-addon eye">
                         <i class="fa fa-eye-slash" aria-hidden="true"></i>

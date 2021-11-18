@@ -56,7 +56,7 @@
             <!-- Kode Sapi -->
             <div class="form-group">
               <label for="kode">Kode Sapi <i style="color: red;">*</i></label>
-              <select class="form-control" name="kode" id="kode" required>
+              <select class="form-control" name="kode" id="kode">
                   @forelse($data_sapi as $data)
                   <option value="{{$data->kode}}">{{$data->kode}}</option>
                   @empty
@@ -72,12 +72,12 @@
             <!-- Status -->
             <div class="form-group">
               <label for="status">Status <i style="color: red;">*</i></label>
-              <input name="status" type="text" class="form-control" id="status" placeholder="Status" required="">
+              <input name="status" type="text" class="form-control" id="status" placeholder="Status">
             </div>
             <!-- Keterangan -->
             <div class="form-group">
               <label for="keterangan">Keterangan <i style="color: red;">*</i></label>
-              <input name="keterangan" type="text" class="form-control" id="keterangan" placeholder="Keterangan" required="">
+              <input name="keterangan" type="text" class="form-control" id="keterangan" placeholder="Keterangan">
             </div>
 
             <br>
@@ -123,12 +123,12 @@
             <!-- Status -->
             <div class="form-group">
               <label for="edit_status">Status <i style="color: red;">*</i></label>
-              <input name="edit_status" type="text" class="form-control" id="edit_status" placeholder="Status" required="">
+              <input name="edit_status" type="text" class="form-control" id="edit_status" placeholder="Status">
             </div>
             <!-- Keterangan -->
             <div class="form-group">
               <label for="edit_keterangan">Keterangan <i style="color: red;">*</i></label>
-              <input name="edit_keterangan" type="text" class="form-control" id="edit_keterangan" placeholder="Keterangan" required="">
+              <input name="edit_keterangan" type="text" class="form-control" id="edit_keterangan" placeholder="Keterangan">
             </div>
 
             <br>
