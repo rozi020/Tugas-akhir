@@ -78,31 +78,29 @@ class UserConfigurationController extends Controller
     }
 
     public function updatePassword(Request $request){
-        $error = array(
-            'oldPassword.required' => 'Password Lama tidak boleh kosong!',
-            'newPassword.required' => 'Password Baru tidak boleh kosong!',
-            'newPassword.min' => 'Password tidak boleh kurang dari 8 karakter!',
-            'confirmPassword.min' => 'Password tidak boleh kurang dari 8 karakter!',
-            'confirmPassword.same' => 'Konfirmasi password baru anda tidak cocok !'
-        );
 
-        $validator = Validator::make($request->all(),[
-            'oldPassword' => ['required', new MatchOldPassword],
-            'newPassword' => ['required|min:8'],
-            'confirmPassword' => ['min:8|same:newPassword'],
-        ],$error);
+        if(Hash::check($request->oldPassword, auth()->user()->password)){
 
-        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->newPassword)]);
+            if($request->newPassword == $request->confirmPassword){
+                User::find(auth()->user()->id)->update(['password'=> Hash::make($request->newPassword)]);
 
-        // Writing History
-        $history = new History;
-        $history->user_id = auth()->user()->id;
-        $history->nama = auth()->user()->name;
-        $history->aksi = "Edit";
-        $history->keterangan = "Akun '".auth()->user()->username."' merubah passwordnya.";
-        $history->save();
+                // Writing History
+                $history = new History;
+                $history->user_id = auth()->user()->id;
+                $history->nama = auth()->user()->name;
+                $history->aksi = "Edit";
+                $history->keterangan = "Akun '".auth()->user()->username."' merubah passwordnya.";
+                $history->save();
 
-        return redirect('/dashboard')->with('success','Password berhasil diperbarui !');
+                return redirect('/dashboard')->with('success','Password berhasil diperbarui !');
+            }else{
+                return redirect('/password')->with('error','Password Konfirmasi tidak sama!');
+            }
+
+        }else{
+            return redirect('/password')->with('error','Password Lama Salah!');
+        }
+
     }
 
     public function activity(){
