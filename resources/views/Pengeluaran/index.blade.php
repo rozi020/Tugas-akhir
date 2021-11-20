@@ -22,7 +22,11 @@
 
                 <div class="card-header py-3">
                     <button type="button" class="btn btn-primary mr-2 mb-1" id="btn-modal-pengeluaran"><i class="fa fa-plus"></i> Tambah Pengeluaran</button>
+                    @if($counter == 0)
+                    <button class="btn btn-success mb-1" disabled><i class="fa fa-download"></i> Export</button>
+                    @else
                     <a href="{{ url('/pengeluaran/export') }}" class="btn btn-success mb-1"><i class="fa fa-download"></i> Export</a>
+                    @endif
                 </div>
 
                 <div class="counter text-left ml-4">

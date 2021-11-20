@@ -182,7 +182,7 @@ $(document).ready(function() {
                     type: 'get',
                     url: '/pengeluaran/delete/' + id,
                     success: function(response) {
-                        Swal.fire('Deleted! data telah dihapus.', 'success');
+                        Swal.fire('Deleted!', 'data pengeluaran telah dihapus.', 'success');
                         LoadTablePengeluaran();
                     },
                     error: function(err) {
