@@ -40,8 +40,8 @@
 
                             <div class="form-group">
                                 <label for="newPassword">Password Baru <i style="color: red;">*</i></label>
-                                <div class="input-group" id="show_hide_password">
-                                    <input name="newPassword" type="password" class="form-control" id="newPassword" required="">
+                                <div class="input-group" id="show_hide_password2">
+                                    <input name="newPassword" type="password" class="form-control" id="newPassword" minlength="8" required="">
                                     <a href="">
                                         <div class="input-group-addon eye">
                                             <i class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -52,8 +52,8 @@
 
                             <div class="form-group">
                                 <label for="confirmPassword">Konfirmasi Password Baru <i style="color: red;">*</i></label>
-                                <div class="input-group" id="show_hide_password">
-                                    <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" required="">
+                                <div class="input-group" id="show_hide_password3">
+                                    <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" minlength="8" required="">
                                     <a href="">
                                         <div class="input-group-addon eye">
                                             <i class="fa fa-eye-slash" aria-hidden="true"></i>
